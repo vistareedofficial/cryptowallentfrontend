@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Login.css'; // Assuming you have a CSS file for your Login component
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const [responseMessage, setResponseMessage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,15 +27,18 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
-        // Save the tokens or perform additional actions
         console.log('Login successful:', data);
+        setResponseMessage(data.message || 'Login successful!');
       } else {
-        console.error('Login failed:', response.statusText);
+        console.error('Login failed:', data);
+        setResponseMessage(`Login failed. ${data.message || 'Please try again later.'}`);
       }
     } catch (error) {
       console.error('Error during login:', error);
+      setResponseMessage('An error occurred. Please try again later.');
     }
   };
 
@@ -66,6 +72,14 @@ const Login = () => {
 
         <button type="submit">Login</button>
         <br />
+
+        {/* Display response message */}
+        {responseMessage && (
+          <p className={`response-message ${responseMessage.includes('failed') ? 'error' : ''}`}>
+            {responseMessage}
+          </p>
+        )}
+
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
