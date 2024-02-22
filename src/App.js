@@ -7,6 +7,7 @@ import Login from './components/Login/Login';
 import Footer from './components/Footer/footer';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
+import Dashboard from './components/Dashboard/Dashboard'; // Import your Dashboard component
 
 function App() {
   return (
@@ -16,9 +17,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+        <Route path="/dashboard" element={<Dashboard />} /> 
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 }

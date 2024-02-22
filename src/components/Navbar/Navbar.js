@@ -1,15 +1,28 @@
-// Navbar.js
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthService from '../AuthService/AuthService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignInAlt, faHome, faBars } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(AuthService.isLoggedIn());
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLoggedIn(AuthService.isLoggedIn());
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    AuthService.clearTokens();
+    setIsLoggedIn(false);
+    navigate('/');
   };
 
   return (
@@ -22,21 +35,34 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faBars} />
         </div>
         <ul className={`navbar-menu ${isMenuOpen ? 'show' : ''}`}>
-          <li className="navbar-item">
-            <Link to="/signup" className="navbar-link">
-               Sign Up
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/login" className="navbar-link">
-               Login
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/dashboard" className="navbar-link">
-               Dashboard
-            </Link>
-          </li>
+          {!isLoggedIn && (
+            <>
+              <li className="navbar-item">
+                <Link to="/signup" className="navbar-link">
+                  Sign Up
+                </Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/login" className="navbar-link">
+                  Login
+                </Link>
+              </li>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <li className="navbar-item">
+                <Link to="/dashboard" className="navbar-link">
+                  Dashboard
+                </Link>
+              </li>
+              <li className="navbar-item">
+                <button onClick={handleLogout} className="navbar-link">
+                  Logout
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>

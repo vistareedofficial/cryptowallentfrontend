@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css'; // Assuming you have a CSS file for your Login component
+import { Link, useNavigate } from 'react-router-dom';
+import AuthService from '../AuthService/AuthService';
+import './Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const Login = () => {
   });
 
   const [responseMessage, setResponseMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +33,9 @@ const Login = () => {
 
       if (response.ok) {
         console.log('Login successful:', data);
+        AuthService.setTokens(data.tokens); // Set access token
         setResponseMessage(data.message || 'Login successful!');
+        navigate('/dashboard'); // Redirect to the dashboard after successful login
       } else {
         console.error('Login failed:', data);
         setResponseMessage(`Login failed. ${data.message || 'Please try again later.'}`);
@@ -74,11 +78,7 @@ const Login = () => {
         <br />
 
         {/* Display response message */}
-        {responseMessage && (
-          <p className={`response-message ${responseMessage.includes('failed') ? 'error' : ''}`}>
-            {responseMessage}
-          </p>
-        )}
+        {responseMessage && <p className="response-message">{responseMessage}</p>}
 
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
