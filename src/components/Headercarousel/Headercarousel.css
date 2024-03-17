@@ -1,0 +1,69 @@
+
+.carousel-image {
+  width: 100%; /* Adjust width as needed */
+}
+
+
+/* .carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+} */
+
+/* Styles for navigation arrows */
+.slick-prev,
+.slick-next {
+  font-size: 24px; /* Adjust arrow size */
+  color: white; /* Arrow color */
+  background-color: rgba(0, 0, 0, 0.5); /* Arrow background color */
+  padding: 5px; /* Adjust padding */
+  z-index: 1; /* Ensure arrows appear above slides */
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  color: #ccc; /* Arrow color on hover */
+}
+
+.slick-prev {
+  left: 10px; /* Adjust left position */
+}
+
+.slick-next {
+  right: 10px; /* Adjust right position */
+}
+
+#Landmines{
+  font-size: 45px;
+  font-weight: bold;
+  background-color: black;
+}
+
+.carousel-item .text-overlay {
+  position: absolute; /* Overlap the image */
+  bottom: 20px; /* Adjust positioning from the bottom */
+  left: 20px; /* Adjust positioning from the left */
+  color: white; /* Example text color */
+  font-size: 55px; /* Example font size */
+  font-style: unset;
+  /* Add other styles as needed (background, font-weight, etc.) */
+}
+
+
+@media screen and (max-width: 768px) {
+  /* Adjust styles for screens smaller than 768px */
+  .carousel-image {
+    height: 300px !important; /* Example height adjustment for smaller screens */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Adjust styles for screens smaller than 480px */
+  .carousel-image {
+    height: 300px !important; /* Example height adjustment for very small screens */
+  }
+}

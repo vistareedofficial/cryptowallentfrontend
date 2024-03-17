@@ -1,0 +1,106 @@
+.container-spacing {
+    margin: 20px; /* Adjust the top margin according to your design */
+  }
+  
+  .blackdiv {
+    width: 100%;
+    height: 400px;
+    background-color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .subscribe-form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .subscribe-form input {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 150px; /* Adjust the width as needed */
+  }
+  
+  .subscribe-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .subscribe-form button:hover {
+    background-color: #555;
+  }
+  
+  .subscribe-form button:hover {
+    background-color: #555;
+  }
+
+
+
+  #cc-card1{
+    background-image: url("../Images/landmines.jpeg");
+    /* margin: 20px; */
+
+  }
+
+  #cc-card2{
+    background-image: url("../Images/sum444.PNG");
+
+  }
+
+  #cc-card3{
+    background-image: url("../Images/piecessum41.jpg");
+  }
+
+  #cc-card4{
+    background-image: url("../Images/suuuting.jpg");
+
+  }
+
+
+  .card {
+    /* background-image: url("../Images/Sum41.jpg"); */
+  
+    background-repeat: no-repeat; /* Prevent image tiling */
+    background-size: cover; /* Stretch image to fit the card */
+    position: relative; /* Allows content to be positioned on top of the image */
+  }
+
+
+
+
+
+
+  @media screen and (max-width: 768px) {
+    /* Adjust styles for screens smaller than 768px */
+    #cc-card1{
+     margin-top: 10px !important;
+     margin-bottom: 40px!important;
+      /* margin: 20px; */
+  
+    }
+  
+  }
+  
+  @media screen and (max-width: 480px) {
+    /* Adjust styles for screens smaller than 480px */
+    .carousel-image {
+      height: 300px !important; /* Example height adjustment for very small screens */
+    }
+  }
+  
+  
+
+  

@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthService from '../AuthService/AuthService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignInAlt, faHome, faBars } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
+import riserise from "../Images/riserise.PNG";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +27,9 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
+      <img src={riserise} alt="Riserise Logo" className="navbar-logo-img" />
       <div className="navbar-container">
+        
         <Link to="/" className="navbar-logo">
           Membership
         </Link>
