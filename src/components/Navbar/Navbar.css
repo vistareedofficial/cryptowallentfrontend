@@ -5,6 +5,10 @@
   padding: 3px 0;
 }
 
+/* #navitems{
+  float: right !important;
+} */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -17,7 +21,7 @@
 
 .navbar-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Align items to the ends */
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
@@ -34,7 +38,6 @@
   list-style: none;
   display: flex;
   margin: 0;
-  
 }
 
 .navbar-item {
@@ -50,13 +53,15 @@
 }
 
 .navbar-toggle {
-  display: none; /* Initially hide the toggle icon */
-  font-size: 1.5rem;
+  font-size: 2rem; /* Increase icon size */
   cursor: pointer;
-  margin-left: 10px; /* Add left margin to the toggle icon */
+  display: none;
 }
 
-/* Add additional styles as needed */
+/* Change toggle icon when menu is open */
+.navbar-menu.show ~ .navbar-toggle {
+  transform: rotate(90deg); /* Rotate icon */
+}
 
 /* Float the image to the right */
 .navbar-logo-img {
@@ -70,11 +75,13 @@
   .navbar-container {
     flex-direction: column;
     align-items: flex-start;
+    float: left !important;
   }
 
   .navbar-menu {
     margin-top: 10px;
     display: none; /* Initially hide the menu items */
+    z-index: 1;
   }
 
   .navbar-item {
@@ -83,7 +90,16 @@
   }
 
   .navbar-toggle {
-    display: block; /* Show the toggle icon in mobile view */
+    font-size: 1rem; /* Increase icon size */
+    cursor: pointer;
+    margin-left: 200px; /* Push toggle icon to the right */
+    display: block;
+  }
+
+  .navbar-link {
+    padding: 10px;
+    border-bottom: 1px solid #fff;
+    color: #ffffff; /* Set color to white */
   }
 
   /* Show the menu items when the toggle icon is clicked */
@@ -99,8 +115,8 @@
     padding-left: 20px; /* Add padding to the left */
   }
 
-  .navbar-link {
-    padding: 10px;
-    border-bottom: 1px solid #fff;
+  /* Redirect to home page when HOME link is clicked */
+  .navbar-menu.show .navbar-link:nth-child(1) {
+    cursor: pointer;
   }
 }

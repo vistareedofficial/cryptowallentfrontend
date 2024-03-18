@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthService from '../AuthService/AuthService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignInAlt, faHome, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignInAlt, faHome, faBars, faUsers, faCompactDisc, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 import riserise from "../Images/riserise.PNG";
 
@@ -29,24 +29,44 @@ const Navbar = () => {
     <nav className="navbar">
       <img src={riserise} alt="Riserise Logo" className="navbar-logo-img" />
       <div className="navbar-container">
-        
-        <Link to="/" className="navbar-logo">
-          Membership
-        </Link>
-        <div className="navbar-toggle" onClick={toggleMenu}>
-          <FontAwesomeIcon icon={faBars} />
-        </div>
         <ul className={`navbar-menu ${isMenuOpen ? 'show' : ''}`}>
+          <li className="navbar-item">
+          <Link to="/" className="navbar-link" onClick={() => setIsMenuOpen(false)}> {/* Add onClick handler to close menu */}
+          {/* <FontAwesomeIcon icon={faHome} /> */}
+          HOME
+        </Link>
+
+          </li>
+          <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/" className="navbar-link">
+              {/* <FontAwesomeIcon icon={faUsers} /> */}
+              ARTISTS
+            </Link>
+          </li>
+          <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/" className="navbar-link">
+              {/* <FontAwesomeIcon icon={faCompactDisc} /> */}
+              RELEASES
+            </Link>
+          </li>
+          <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/" className="navbar-link">
+              {/* <FontAwesomeIcon icon={faCompactDisc} /> */}
+              CONTACT
+            </Link>
+          </li>
           {!isLoggedIn && (
             <>
               <li className="navbar-item">
                 <Link to="/signup" className="navbar-link">
-                  Sign Up
+                  {/* <FontAwesomeIcon icon={faUser} /> */}
+                  SIGN UP
                 </Link>
               </li>
               <li className="navbar-item">
                 <Link to="/login" className="navbar-link">
-                  Login
+                  {/* <FontAwesomeIcon icon={faSignInAlt} /> */}
+                  LOGIN
                 </Link>
               </li>
             </>
@@ -55,17 +75,20 @@ const Navbar = () => {
             <>
               <li className="navbar-item">
                 <Link to="/dashboard" className="navbar-link">
-                  Dashboard
+                  DASHBOARD
                 </Link>
               </li>
               <li className="navbar-item">
                 <button onClick={handleLogout} className="navbar-link">
-                  Logout
+                  LOGOUT
                 </button>
               </li>
             </>
           )}
         </ul>
+        <div className={`navbar-toggle ${isMenuOpen ? 'close-menu' : ''}`} onClick={toggleMenu}>
+          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
+        </div>
       </div>
     </nav>
   );
