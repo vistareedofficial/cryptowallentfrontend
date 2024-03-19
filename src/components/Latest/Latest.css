@@ -51,7 +51,7 @@
 
   #cc-card1{
     background-image: url("../Images/landmines.jpeg");
-    /* margin: 20px; */
+    margin-bottom: 20px;
 
   }
 
@@ -103,4 +103,14 @@
   
   
 
+ /* Add margin between cards for screens smaller than 768px */
+@media screen and (max-width: 768px) {
+  .card {
+    margin-bottom: 20px; /* Adjust the margin as needed */
+  }
+  #cc-card1{
+    margin-bottom: 20px;
+
+  }
+}
   

@@ -1,9 +1,142 @@
-/* Dashboard.css */
 .dashboard-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* Add additional styling as needed */
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Welcome Message */
+.welcome-message {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.welcome-message h2 {
+  color: #333;
+}
+
+/* Subscription Section */
+.subscription-section {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.subscription-section h3 {
+  color: #333;
+}
+
+.subscription-form {
+  margin-top: 10px;
+}
+
+.subscription-form input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.subscription-form button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Latest Updates Section */
+.latest-updates {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.latest-updates h3 {
+  color: #333;
+}
+
+.latest-updates ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.latest-updates li {
+  margin-bottom: 10px;
+}
+
+.latest-updates li a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Fan Spotlight Section */
+.fan-spotlight {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.fan-spotlight h3 {
+  color: #333;
+}
+
+/* Contests and Giveaways Section */
+.contests-giveaways {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.contests-giveaways h3 {
+  color: #333;
+}
+
+.contests-giveaways .cta-button {
+  margin-top: 10px;
+}
+
+.contests-giveaways .cta-button button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Events Section */
+.events {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.events h3 {
+  color: #333;
+}
+
+.events ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.events li {
+  margin-bottom: 10px;
+}
+
+.events li a {
+  color: #007bff;
+  text-decoration: none;
+}

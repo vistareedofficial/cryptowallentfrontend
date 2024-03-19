@@ -35,6 +35,10 @@ const Latest = () => {
             </Card.Body>
           </Card>
         </Col>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <Col sm={6} md={3}>
           <Card id='cc-card4' className="text-center mb-4" style={{ padding: '50px', height: '100%', backgroundColor: '#A52A2A', color: 'white' }}>
             <Card.Header style={{ backgroundColor: '#D2B48C' }}>Album - Heaven X Hell</Card.Header>

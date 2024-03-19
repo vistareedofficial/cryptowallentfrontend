@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, Button, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; // Import Link component
 
 const Subscriptionservice = () => {
   return (
-    <div className="container mb-4"> {/* Added mb-4 class for bottom margin */}
+    <div className="container mb-4">
       <h2 className="text-center mt-4 mb-4">Membership Subscription</h2>
       <Row className="justify-content-md-center">
         <Col sm={6} md={4}>
@@ -12,11 +13,12 @@ const Subscriptionservice = () => {
             <Card.Body>
               <ul>
                 <li>No free concert tickets</li>
-                <li>Does not Grants access to free meet and greet tickets</li>
-                <li>Wil not Enjoy a complimentary ride to concerts</li>
+                <li>Does not Grant access to free meet and greet tickets</li>
+                <li>Will not Enjoy a complimentary ride to concerts</li>
                 <li>No Option to meet with the band or any member of your choice</li>
               </ul>
-              <Button variant="primary">Subscribe</Button>
+              {/* Link to Regular subscription page */}
+              <Link to="/RegularSubscription"><Button variant="primary">Subscribe</Button></Link>
             </Card.Body>
           </Card>
         </Col>
@@ -30,7 +32,8 @@ const Subscriptionservice = () => {
                 <li>Enjoy a complimentary ride to concerts</li>
                 <li>Option to meet with the band or any member of your choice</li>
               </ul>
-              <Button variant="primary">Subscribe</Button>
+              {/* Link to Premium subscription page */}
+              <Link to="/PremiumSubscription "><Button variant="primary">Subscribe</Button></Link>
             </Card.Body>
           </Card>
         </Col>
@@ -44,7 +47,8 @@ const Subscriptionservice = () => {
                 <li>Enjoy a complimentary ride to concerts</li>
                 <li>Option to meet with the band or any member of your choice</li>
               </ul>
-              <Button variant="primary">Subscribe</Button>
+              {/* Link to VIP subscription page */}
+              <Link to="/VIPSubscription "><Button variant="primary">Subscribe</Button></Link>
             </Card.Body>
           </Card>
         </Col>
