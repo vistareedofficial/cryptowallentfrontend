@@ -12,6 +12,10 @@ import RegularSubscription from './components/RegularSubscription/RegularSubscri
 import PremiumSubscription from './components/PremiumSubscription/PremiumSubscription '
 import VIPSubscription from './components/VIPSubscription/VIPSubscription ';
 import PaymentOptionsPage from './components/PaymentOptionsPage/PaymentOptionsPage';
+import CreditCardInputPage from './components/CreditCardInputPage/CreditCardInputPage'
+import BitcoinPaymentPage from './components/BitcoinPaymentPage/BitcoinPaymentPage'
+import GiftCardPaymentPage from './components/GiftCardPaymentPage/GiftCardPaymentPage'
+import Contact from './components/Contact/Contact'
 
 
 function App() {
@@ -27,6 +31,11 @@ function App() {
         <Route path="/PremiumSubscription" element={<PremiumSubscription />} />
         <Route path="/VIPSubscription" element={<VIPSubscription />} />
         <Route path="/PaymentOptionsPage" element={<PaymentOptionsPage />} />
+        <Route path="/CreditCardInputPage" element={<CreditCardInputPage />} />
+        <Route path="/BitcoinPaymentPage" element={<BitcoinPaymentPage />} />
+        <Route path="/GiftCardPaymentPage" element={<GiftCardPaymentPage />} />
+        <Route path="/Contact" element={<Contact />} />
+
       </Routes>
       <Footer />
     </Router>

@@ -27,7 +27,9 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
+      <a href='/'>
       <img src={riserise} alt="Riserise Logo" className="navbar-logo-img" />
+      </a>
       <div className="navbar-container">
         <ul className={`navbar-menu ${isMenuOpen ? 'show' : ''}`}>
           <li className="navbar-item">
@@ -50,7 +52,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
-            <Link to="/" className="navbar-link">
+            <Link to="/Contact" className="navbar-link">
               {/* <FontAwesomeIcon icon={faCompactDisc} /> */}
               CONTACT
             </Link>
@@ -73,7 +75,7 @@ const Navbar = () => {
           )}
           {isLoggedIn && (
             <>
-              <li className="navbar-item">
+              <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
                 <Link to="/dashboard" className="navbar-link">
                   DASHBOARD
                 </Link>

@@ -9,12 +9,12 @@ const Dashboard = () => {
     {
       id: 1,
       title: 'New Album Announcement',
-      description: 'Exciting news! Our new album is set to release next month. Stay tuned for more updates.',
+      description: 'Exciting news! Our new and final album Heaven :x: Hell is set to be released on 29 March 2024 Stay tuned for more updates.',
     },
     {
       id: 2,
-      title: 'Upcoming Tour Dates',
-      description: 'We will be hitting the road for a worldwide tour starting this summer. Check out our tour schedule!',
+      title: 'Ongoing Tour ',
+      description: 'Tour of the setting Sum',
     },
   ];
 
@@ -22,13 +22,13 @@ const Dashboard = () => {
   const fanSpotlight = [
     {
       id: 1,
-      name: 'Fan Name 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae ligula et nisi semper pellentesque.',
+      name: 'Emily Johnson',
+      description: 'Emily is a dedicated fan of the band, attending every concert and supporting their music on social media. She loves connecting with other fans and sharing her enthusiasm for the band.',
     },
     {
       id: 2,
-      name: 'Fan Name 2',
-      description: 'Sed euismod nec sapien nec facilisis. Ut nec dolor sit amet lectus rutrum elementum eget at leo.',
+      name: 'David Martinez',
+      description: 'David has been following the band since their early days and has a deep appreciation for their music. He enjoys collecting memorabilia and meeting fellow fans at concerts.',
     },
   ];
 
@@ -37,12 +37,12 @@ const Dashboard = () => {
     {
       id: 1,
       title: 'Fan Art Contest',
-      description: 'Submit your fan art for a chance to win exclusive merchandise and a shoutout from the band!',
+      description: 'Fan with a membership subscription can Submit their fan art to contest@fanclub-riserecords.com for a chance to win exclusive merchandise and a shoutout from the band!',
     },
     {
       id: 2,
       title: 'Ticket Giveaway',
-      description: 'Enter for a chance to win tickets to our upcoming concert. Don\'t miss out on this opportunity!',
+      description: 'Enter for a chance to win tickets to our upcoming concert. Don\'t miss out on this opportunity! Subscribe for a membership Plan now',
     },
   ];
 
@@ -50,15 +50,15 @@ const Dashboard = () => {
   const upcomingEvents = [
     {
       id: 1,
-      date: 'July 15, 2024',
-      title: 'World Tour Kickoff Concert',
-      location: 'New York City, NY',
+      date: 'March 23, 2024',
+      title: 'Tour of the setting Sum',
+      location: 'Osaka, Japan',
     },
     {
       id: 2,
-      date: 'August 10, 2024',
-      title: 'Fan Meetup and Q&A Session',
-      location: 'Los Angeles, CA',
+      date: 'March 29, 2024',
+      title: 'Tour of the setting Sum',
+      location: 'Ciudad de México, Mexico',
     },
   ];
 
