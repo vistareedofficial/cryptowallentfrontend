@@ -10,6 +10,7 @@ const Login = () => {
   });
 
   const [responseMessage, setResponseMessage] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initialize isLoggedIn state to false
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -34,6 +35,7 @@ const Login = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         AuthService.setTokens(data.tokens); // Set access token
+        setIsLoggedIn(true); // Update isLoggedIn state to true after successful login
         setResponseMessage(data.message || 'Login successful!');
         navigate('/dashboard'); // Redirect to the dashboard after successful login
       } else {
@@ -47,7 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={{ marginBottom: '100px' }}>
       <h2>Login</h2>
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="form-group">

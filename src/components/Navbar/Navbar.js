@@ -8,11 +8,21 @@ import riserise from "../Images/riserise.PNG";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(AuthService.isLoggedIn());
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoggedIn(AuthService.isLoggedIn());
+    const checkLoginStatus = () => {
+      setIsLoggedIn(AuthService.isLoggedIn());
+    };
+
+    checkLoginStatus(); // Check login status when component mounts
+
+    // Subscribe to login status changes
+    const unsubscribe = AuthService.subscribe(checkLoginStatus);
+
+    // Unsubscribe from login status changes when component unmounts
+    return () => unsubscribe();
   }, []);
 
   const toggleMenu = () => {
@@ -28,52 +38,31 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <a href='/'>
-      <img src={riserise} alt="Riserise Logo" className="navbar-logo-img" />
+        <img src={riserise} alt="Riserise Logo" className="navbar-logo-img" />
       </a>
       <div className="navbar-container">
         <ul className={`navbar-menu ${isMenuOpen ? 'show' : ''}`}>
           <li className="navbar-item">
-          <Link to="/" className="navbar-link" onClick={() => setIsMenuOpen(false)}> {/* Add onClick handler to close menu */}
-          {/* <FontAwesomeIcon icon={faHome} /> */}
-          HOME
-        </Link>
-
+            <Link to="/" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
+              HOME
+            </Link>
           </li>
           <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
             <Link to="/" className="navbar-link">
-              {/* <FontAwesomeIcon icon={faUsers} /> */}
               ARTISTS
             </Link>
           </li>
           <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
             <Link to="/" className="navbar-link">
-              {/* <FontAwesomeIcon icon={faCompactDisc} /> */}
               RELEASES
             </Link>
           </li>
           <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
             <Link to="/Contact" className="navbar-link">
-              {/* <FontAwesomeIcon icon={faCompactDisc} /> */}
               CONTACT
             </Link>
           </li>
-          {!isLoggedIn && (
-            <>
-              <li className="navbar-item">
-                <Link to="/signup" className="navbar-link">
-                  {/* <FontAwesomeIcon icon={faUser} /> */}
-                  SIGN UP
-                </Link>
-              </li>
-              <li className="navbar-item">
-                <Link to="/login" className="navbar-link">
-                  {/* <FontAwesomeIcon icon={faSignInAlt} /> */}
-                  LOGIN
-                </Link>
-              </li>
-            </>
-          )}
-          {isLoggedIn && (
+          {isLoggedIn ? (
             <>
               <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
                 <Link to="/dashboard" className="navbar-link">
@@ -81,9 +70,23 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="navbar-item">
-                <button onClick={handleLogout} className="navbar-link">
+                <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="navbar-link">
                   LOGOUT
                 </button>
+              </li>
+
+            </>
+          ) : (
+            <>
+              <li className="navbar-item">
+                <Link to="/signup" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
+                  SIGN UP
+                </Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/login" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
+                  LOGIN
+                </Link>
               </li>
             </>
           )}

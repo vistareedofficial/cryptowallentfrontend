@@ -110,7 +110,7 @@ const SignupForm = () => {
 
 
   return (
-    <div>
+    <div style={{ marginBottom: '100px' }}>
       {successMessage && <div className="alert alert-success">{successMessage}</div>}
 
       {errorMessages.general && <div className="alert alert-danger">{errorMessages.general}</div>}

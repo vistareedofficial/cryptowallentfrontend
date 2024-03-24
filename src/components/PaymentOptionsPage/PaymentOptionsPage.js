@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import vissa from '../Images/vissa.png';
 import mastercard_logo from '../Images/mastercard_logo.jpg';
@@ -6,8 +6,26 @@ import bitcoinLogo from '../Images/bitcoin_logo.png';
 import giftCard1Logo from '../Images/gift_card_1_logo.png';
 import giftCard2Logo from '../Images/gift_card_1_logo.png';
 import { Link } from 'react-router-dom';
+import AuthService from '../AuthService/AuthService'; // Import AuthService to check login status
 
 const PaymentOptionsPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initialize isLoggedIn state to false
+
+  useEffect(() => {
+    // Update isLoggedIn state based on whether user is logged in or not
+    setIsLoggedIn(AuthService.isLoggedIn());
+  }, []);
+
+  // Render the PaymentOptionsPage only if user is logged in
+  if (!isLoggedIn) {
+    return (
+      <div className="container text-center mt-5" style={{ marginBottom: '450px' }}>
+        <h3>Please log in to view payment options.</h3>
+        <Link to="/login"><Button variant="primary">Login</Button></Link>
+      </div>
+    );
+  }
+
   return (
     <div className="container" style={{ marginBottom: '450px' }}>
       <h2 className="text-center mt-4 mb-4">Payment Options</h2>
@@ -45,11 +63,9 @@ const PaymentOptionsPage = () => {
           </Card>
         </Col>
       </Row>
-      {/* Contact Information */}
-      <Row className="justify-content-center mt-4">
-        <Col xs={12} className="text-center">
-          <h4>Contact admin at admin@fanclub-riserecords.com for installmental payment</h4>
-        </Col>
+      <Row className="justify-content-start">
+        <br /><br />
+        <h4>Contact admin at admin@fanclub-riserecords.com for installment payment</h4>
       </Row>
     </div>
   );
