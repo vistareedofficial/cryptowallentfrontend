@@ -20,7 +20,7 @@ const PaymentOptionsPage = () => {
   if (!isLoggedIn) {
     return (
       <div className="container text-center mt-5" style={{ marginBottom: '450px' }}>
-        <h3>Please log in to view payment options.</h3>
+        <h3>Please log in to Subscribe.</h3>
         <Link to="/login"><Button variant="primary">Login</Button></Link>
       </div>
     );
@@ -63,9 +63,10 @@ const PaymentOptionsPage = () => {
           </Card>
         </Col>
       </Row>
-      <Row className="justify-content-start">
-        <br /><br />
-        <h4>Contact admin at admin@fanclub-riserecords.com for installment payment</h4>
+      <Row className="justify-content-center">
+        <Col xs={12} className="text-center">
+          <h4>Contact admin at admin@fanclub-riserecords.com for installment payment</h4>
+        </Col>
       </Row>
     </div>
   );
