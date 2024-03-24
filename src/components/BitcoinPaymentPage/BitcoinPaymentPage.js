@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const BitcoinPaymentPage = () => {
   // Generate a random Bitcoin address for demonstration purposes
-  const bitcoinAddress = '1BitcoinAddress1234567890';
+  const bitcoinAddress = '1MCqMi9hA6UALoBHsU5BNTUKq7mTb4LvFV';
 
   // State to track whether the address has been copied
   const [copied, setCopied] = useState(false);
