@@ -1,13 +1,11 @@
 /* Navbar.css */
+
 .navbar {
   background-color: #ffffff;
   color: #252323;
   padding: 3px 0;
+  border-bottom: 2px solid #8f8888; /* Add bottom border */
 }
-
-/* #navitems{
-  float: right !important;
-} */
 
 .navbar {
   display: flex;
@@ -55,6 +53,7 @@
 .navbar-toggle {
   font-size: 2rem; /* Increase icon size */
   cursor: pointer;
+  margin-right: 10px; /* Adjust margin-right as needed */
   display: none;
 }
 
@@ -65,15 +64,8 @@
 
 /* Float the image to the right */
 .navbar-logo-img {
-  float: right !important;
-  margin-left: 5px;
-  margin-top: 0px !important;
+  margin-top: 5px; /* Adjust margin-top as needed */
 }
-
-
-
-
-
 
 /* Responsive styles */
 @media only screen and (max-width: 600px) {
@@ -97,8 +89,9 @@
   .navbar-toggle {
     font-size: 1rem; /* Increase icon size */
     cursor: pointer;
-    margin-left: 200px; /* Push toggle icon to the right */
-    display: block;
+    margin-left: auto; /* Move toggle icon to the right */
+    display: flex;
+    align-items: center; /* Align icon with logo */
   }
 
   .navbar-link {
@@ -124,4 +117,10 @@
   .navbar-menu.show .navbar-link:nth-child(1) {
     cursor: pointer;
   }
+  .navbar-toggle {
+    font-size: 1rem; /* Increase icon size */
+    cursor: pointer;
+    margin-left: 150px; /* Float toggle icon to the right */
+  }
+  
 }

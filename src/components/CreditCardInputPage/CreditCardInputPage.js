@@ -1,9 +1,10 @@
+// CreditCardInputPage.js in your React app
+
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-
+import axios from 'axios'; // Import Axios library
 
 const CreditCardInputPage = () => {
   // Validation schema using Yup
@@ -20,23 +21,35 @@ const CreditCardInputPage = () => {
     cardNumber: '',
     expiryDate: '',
     cvv: '',
+    amount: '',
     name: '',
   };
 
   // Handle form submission
-  const handleSubmit = (values, { setSubmitting }) => {
-    // Simulate form submission
-    console.log(values);
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const requestData = {
+        card_number: values.cardNumber,
+        expiry_date: values.expiryDate,
+        cvv: values.cvv,
+        amount: values.amount,
+        name_on_card: values.name,
+      };
+
+      // Send form data to the Django backend
+      await axios.post('http://localhost:8000/core/creditcards/', requestData);
+      console.log('Form data submitted successfully');
+    } catch (error) {
+      console.error('Error submitting form data:', error);
+    }
     setSubmitting(false);
   };
 
   return (
+    <div style={{ marginBottom: '100px' }}>
+
     <Container>
-        {/* <Col md={4} className="text-left mt-4">
-          <Link to="/PaymentOptionsPage"><Button variant="secondary">Back</Button></Link>
-        </Col> */}
       <Row className="justify-content-center mt-5">
-      
         <Col xs={12} md={6}>
           <h2 className="text-center mb-4">Enter Credit Card Information</h2>
           <Formik
@@ -62,7 +75,7 @@ const CreditCardInputPage = () => {
                   <ErrorMessage name="cvv" component="div" className="text-danger" />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="amount" className="form-label">Amount</label>
+                  <label htmlFor="amount" className="form-label">Amount $</label>
                   <Field type="text" name="amount" className="form-control" />
                   <ErrorMessage name="amount" component="div" className="text-danger" />
                 </div>
@@ -74,19 +87,13 @@ const CreditCardInputPage = () => {
                 <Button type="submit" variant="primary" disabled={isSubmitting}>
                   {isSubmitting ? 'Submitting...' : 'Pay Now'}
                 </Button>
-
               </Form>
-              
             )}
           </Formik>
-          <div>
-          <br/>
-          <br/>
-          <br/>
-        </div>
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 
