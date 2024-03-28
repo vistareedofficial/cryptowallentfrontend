@@ -5,12 +5,14 @@ import './SignUp.css'; // Import your custom CSS file for styling
 
 const SignupForm = () => {
   // State variables for form fields and messages
+  const [fullname, setFullname] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessages, setErrorMessages] = useState({
+    fullname: '',
     username: '',
     password: '',
     email: '',
@@ -24,6 +26,13 @@ const SignupForm = () => {
     e.preventDefault();
 
     // Validate input fields
+    if (!fullname) {
+      setErrorMessages((prevErrors) => ({ ...prevErrors, fullname: 'Fullname is required' }));
+      return;
+    } else {
+      setErrorMessages((prevErrors) => ({ ...prevErrors, fullname: '' }));
+    }
+
     if (!username) {
       setErrorMessages((prevErrors) => ({ ...prevErrors, username: 'Username is required' }));
       return;
@@ -54,6 +63,7 @@ const SignupForm = () => {
 
     // Create user object with form data
     const user = {
+      fullname: fullname, 
       username: username,
       password: password,
       email: email,
@@ -76,6 +86,7 @@ const SignupForm = () => {
           setSuccessMessage(response.data.message);
           // Clear previous error message
           setErrorMessages({
+            fullname: '',
             username: '',
             password: '',
             email: '',
@@ -107,8 +118,6 @@ const SignupForm = () => {
     }
   };
 
-
-
   return (
     <div style={{ marginBottom: '100px' }}>
       {successMessage && <div className="alert alert-success">{successMessage}</div>}
@@ -116,6 +125,16 @@ const SignupForm = () => {
       {errorMessages.general && <div className="alert alert-danger">{errorMessages.general}</div>}
 
       <form>
+        <label>
+          Full Name:
+          <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} />
+          {errorMessages.fullname && <div className="error-message">{errorMessages.fullname}</div>}
+        </label>
+        <label>
+          Email:
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          {errorMessages.email && <div className="error-message">{errorMessages.email}</div>}
+        </label>
         <label>
           Username:
           <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -129,19 +148,13 @@ const SignupForm = () => {
         </label>
         <br />
         <label>
-          Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          {errorMessages.email && <div className="error-message">{errorMessages.email}</div>}
-        </label>
-        <br />
-        <label>
           Phone Number:
           <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           {errorMessages.phoneNumber && <div className="error-message">{errorMessages.phoneNumber}</div>}
         </label>
         <br />
         <div style={{ textAlign: 'center' }}>
-          <button type="submit" onClick={handleSignup}>
+          <button type="button" onClick={handleSignup}>
             Signup
           </button>
           <p>
