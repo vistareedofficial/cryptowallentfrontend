@@ -10,27 +10,27 @@ const Latest = () => {
       <Row className="justify-content-md-center">
         <Col sm={6} md={3}>
           <Card id='cc-card1' className="text-center mb-4" style={{ padding: '50px', height: '100%', backgroundColor: '#A52A2A', color: 'white' }}>
-            <Card.Header style={{ backgroundColor: '#D2B48C' }}>Album - Heaven X Hell</Card.Header>
+            <Card.Header style={{ backgroundColor: '#D2B48C' }}> Fine Line</Card.Header>
             <Card.Body>
-              <Card.Title id='Landmines'>Landmines</Card.Title>
+              {/* <Card.Title id='Landmines'>Fine LIne</Card.Title> */}
               {/* <Button variant="light">Buy Now</Button> */}
             </Card.Body>
           </Card>
         </Col>
         <Col sm={6} md={3}>
           <Card id='cc-card2' className="text-center mb-4" style={{ padding: '50px', height: '100%', backgroundColor: '#A52A2A', color: 'white' }}>
-            <Card.Header style={{ backgroundColor: '#D2B48C' }}>Album - Heaven X Hell</Card.Header>
+            <Card.Header style={{ backgroundColor: '#D2B48C' }}>Matilda</Card.Header>
             <Card.Body>
-              <Card.Title id='Landmines'>Time Won't Wait</Card.Title>
+              {/* <Card.Title id='Landmines'>Matilda</Card.Title> */}
               {/* <Button variant="light">Buy Now</Button> */}
             </Card.Body>
           </Card>
         </Col>
         <Col sm={6} md={3}>
           <Card id='cc-card3' className="text-center mb-4" style={{ padding: '50px', height: '100%', backgroundColor: '#A52A2A', color: 'white' }}>
-            <Card.Header style={{ backgroundColor: '#D2B48C' }}>Album - Heaven X Hell</Card.Header>
+            <Card.Header style={{ backgroundColor: '#D2B48C' }}>As it was</Card.Header>
             <Card.Body>
-              <Card.Title id='Landmines'>I Can't Wait</Card.Title>
+              {/* <Card.Title id='Landmines'>I Can't Wait</Card.Title> */}
               {/* <Button variant="light">Buy Now</Button> */}
             </Card.Body>
           </Card>
@@ -41,9 +41,9 @@ const Latest = () => {
         <br/>
         <Col sm={6} md={3}>
           <Card id='cc-card4' className="text-center mb-4" style={{ padding: '50px', height: '100%', backgroundColor: '#A52A2A', color: 'white' }}>
-            <Card.Header style={{ backgroundColor: '#D2B48C' }}>Album - Heaven X Hell</Card.Header>
+            <Card.Header style={{ backgroundColor: '#D2B48C' }}>Cinema</Card.Header>
             <Card.Body>
-              <Card.Title id='Landmines'>Dopamine</Card.Title>
+              <Card.Title id='Landmines'><br/> <br/> <br/></Card.Title>
             </Card.Body>
           </Card>
         </Col>

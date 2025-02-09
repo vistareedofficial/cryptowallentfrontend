@@ -11,7 +11,7 @@ const RegularSubscription = () => {
         <br/>
       
         
-      <Card.Header>Regular Membership Card - $859</Card.Header> {/* Include the price */}
+      <Card.Header>Regular Membership Card</Card.Header> {/* Include the price */}
       <Card.Body>
         <ul>
           <ul>
@@ -21,10 +21,10 @@ const RegularSubscription = () => {
                 <li>No Option to meet with the band or any member of your choice</li>
               </ul>
         </ul>
-        <Link to="/PaymentOptionsPage" >
+        {/* <Link to="/PaymentOptionsPage" >
           <Button variant="primary">Subscribe</Button>
-        </Link>
-        
+        </Link> */}
+      Contact us at <strong>info@hsfanclub-columbiarecords.com </strong> for your subscription
        
       </Card.Body>
     </Card>

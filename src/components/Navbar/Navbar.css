@@ -65,6 +65,7 @@
 /* Float the image to the right */
 .navbar-logo-img {
   margin-top: 5px; /* Adjust margin-top as needed */
+  width: 60%;
 }
 
 /* Responsive styles */
@@ -92,6 +93,7 @@
     margin-left: auto; /* Move toggle icon to the right */
     display: flex;
     align-items: center; /* Align icon with logo */
+    top: 100px;
   }
 
   .navbar-link {
@@ -121,6 +123,11 @@
     font-size: 1rem; /* Increase icon size */
     cursor: pointer;
     margin-left: 150px; /* Float toggle icon to the right */
+  }
+
+  .navbar-logo-img {
+    margin-top: -70px; /* Move the image up in mobile view */
+    margin-bottom: 10px;
   }
   
 }

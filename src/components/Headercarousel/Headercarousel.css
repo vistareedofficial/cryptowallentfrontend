@@ -1,5 +1,5 @@
 .carousel-image {
-  width: 100%; /* Adjust width as needed */
+  width: 70%; /* Adjust width as needed */
 }
 
 /* Styles for navigation arrows */
@@ -43,13 +43,28 @@
   color: white; /* Example text color */
   font-size: 55px; /* Example font size */
   font-style: unset;
-  /* Add other styles as needed (background, font-weight, etc.) */
+  /* Add other styles 
+  as needed (background, font-weight, etc.) */
 }
+
+.text-overlay-container {
+  position: absolute;
+  left: 73%;
+  top: 30%;
+  display: flex;
+  flex-direction: column;
+  color: rgb(76, 62, 62);
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: left;
+}
+
 
 @media screen and (max-width: 768px) {
   /* Adjust styles for screens smaller than 768px */
   .carousel-image {
     height: 300px !important; /* Example height adjustment for smaller screens */
+    width: 100%
   }
 }
 
@@ -57,5 +72,26 @@
   /* Adjust styles for screens smaller than 480px */
   .carousel-image {
     height: 300px !important; /* Example height adjustment for very small screens */
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .text-overlay-container {
+    font-size: 2rem;
+    position: absolute;
+    left: 5%;
+    top: 20%;
+    display: flex;
+    flex-direction: column;
+    color: rgb(31, 29, 29);
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .text-overlay-container {
+    font-size: 1.5rem;
   }
 }

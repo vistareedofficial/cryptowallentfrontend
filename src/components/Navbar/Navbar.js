@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignInAlt, faHome, faBars, faUsers, faCompactDisc, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 import riserise from "../Images/riserise.PNG";
+import columbia from "../Images/columbia.PNG";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,8 +38,14 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
+       <br/>
+        <br/>
+        <br/>
+        <div className={`navbar-toggle ${isMenuOpen ? 'close-menu' : ''}`} onClick={toggleMenu}>
+          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
+        </div>
       <a href='/'>
-        <img src={riserise} alt="Riserise Logo" className="navbar-logo-img" />
+        <img src={columbia} alt="Riserise Logo" className="navbar-logo-img" />
       </a>
       <div className="navbar-container">
         <ul className={`navbar-menu ${isMenuOpen ? 'show' : ''}`}>
@@ -91,9 +98,7 @@ const Navbar = () => {
             </>
           )}
         </ul>
-        <div className={`navbar-toggle ${isMenuOpen ? 'close-menu' : ''}`} onClick={toggleMenu}>
-          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
-        </div>
+        
       </div>
     </nav>
   );

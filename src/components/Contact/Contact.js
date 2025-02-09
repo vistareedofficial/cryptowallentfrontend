@@ -15,8 +15,7 @@ const Contact = () => {
       <Card.Body>
         <ul>
 
-         info@fanclub-riserecords.com
-          
+        info@hsfanclub-columbiarecords.com          
         </ul>
      
         

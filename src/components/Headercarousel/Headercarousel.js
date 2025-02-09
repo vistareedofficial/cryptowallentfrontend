@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Sum41 from "../Images/Sum41.jpg"; // Adjust the path to match your project structure
-import sum444 from '../Images/sum444.PNG';
 import './Headercarousel.css'; // Importing the CSS file
-import summmFlyer from "../../Images/summmFlyer.PNG";
-import summmmmmmm from "../../Images/summmmmmmm.jpg";
-import { Card, Button, Row, Col } from 'react-bootstrap';
-import piecessum41 from '../../Images/piecessum41.jpg';
-import landmines from '../../Images/landmines.jpeg';
+import { Button } from 'react-bootstrap';
+import harryshouse from "../../Images/harryshouse.jpg";
+import { Link } from 'react-router-dom'; // Import Link component
+import AuthService from '../AuthService/AuthService'; // Corrected AuthService import
 
 const Carousel = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Function to update login status
+    const checkLoginStatus = () => {
+      setIsLoggedIn(AuthService.isLoggedIn());
+    };
+
+    checkLoginStatus(); // Check when component mounts
+
+    // Subscribe to AuthService login status changes
+    const unsubscribe = AuthService.subscribe(checkLoginStatus);
+
+    return () => unsubscribe(); // Unsubscribe on component unmount
+  }, []);
+
+  // Slick Carousel Settings
   const settings = {
     dots: true,
     infinite: true,
@@ -25,26 +39,28 @@ const Carousel = () => {
 
   return (
     <div className="container-fluid mb-4">
-      <Slider {...settings}>
-        <div className="carousel-item">
-          <img
-            src={Sum41}
+        <div>
+          <img 
+            src={harryshouse}
             alt="First slide"
             className="carousel-image"
             style={{ height: '700px' }} // Adjust height as needed
           />
-          <div className="text-overlay">SUM41</div> {/* Added text overlay */}
+          <div className="text-overlay-container">
+            <div className="text-overlay">Harry Styles's</div>
+            <div className="text-overlay">Fan Club.</div> 
+
+            {/* Show "Register Today" button only if the user is NOT logged in */}
+            {!isLoggedIn && (
+              <div className="text-overlay">
+                Become a Member! <br/>
+                <Link to="/Signup">
+                  <Button variant="primary">Register Today</Button>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
-        <div>
-          <img
-            src={summmFlyer}
-            alt="Second slide"
-            className="carousel-image"
-            style={{ height: '700px' }} // Match height to the first image
-          />
-          {/* ... */}
-        </div>
-      </Slider>
     </div>
   );
 };

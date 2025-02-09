@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-left">
             <h3>About Us</h3>
-            <p>Rise Records is a leading music label...</p>
+            <p>Columbia Records is a leading music label...</p>
           </div>
           <div className="footer-center">
             <h3>Quick Links</h3>
@@ -21,12 +21,11 @@ const Footer = () => {
           </div>
           <div className="footer-right">
             <h3>Contact Us</h3>
-            <p>Email: info@fanclub-riserecords.com</p>
-            {/* <p>Phone: +1 (123) 456-7890</p> */}
+            <p>Email: info@hsfanclub-columbiarecords.com</p>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2024 Rise Records</p>
+          <p>&copy; 2025 Columbia Records</p>
         </div>
       </div>
     </footer>
