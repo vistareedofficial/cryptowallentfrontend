@@ -72,7 +72,7 @@ const SignupForm = () => {
 
     try {
       // Make a POST request to the API endpoint
-      const response = await axios.post('http://localhost:8000/auth/signup/', user, {
+      const response = await axios.post('https://info.dreglogistics.com/auth/signup', user, {
         headers: {
           'Content-Type': 'application/json',
           // Add any other headers if needed for your CORS configuration
