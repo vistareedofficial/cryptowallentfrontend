@@ -8,8 +8,8 @@ const Login = () => {
     email: '',
     password: '',
   });
-  
-  const [responseMessage, setResponseMessage] = useState(null);
+
+  const [responseMessage, setResponseMessage] = useState({ message: '', isError: false });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -36,15 +36,15 @@ const Login = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         AuthService.setTokens(data.tokens);
-        setResponseMessage(data.message || 'Login successful!');
+        setResponseMessage({ message: data.message || 'Login successful!', isError: false });
         setTimeout(() => navigate('/dashboard'), 2000);
       } else {
         console.error('Login failed:', data);
-        setResponseMessage(`Login failed. ${data.message || 'Please try again later.'}`);
+        setResponseMessage({ message: `Login failed. ${data.message || 'Please try again later.'}`, isError: true });
       }
     } catch (error) {
       console.error('Error during login:', error);
-      setResponseMessage('Your account is not activated. Please contact Admin.');
+      setResponseMessage({ message: 'Your account is not activated. Please contact Admin.', isError: true });
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +83,11 @@ const Login = () => {
         </button>
         <br />
 
-        {responseMessage && <p className="response-message">{responseMessage}</p>}
+        {responseMessage.message && (
+          <p className="response-message" style={{ color: responseMessage.isError ? 'red' : 'green' }}>
+            {responseMessage.message}
+          </p>
+        )}
 
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
