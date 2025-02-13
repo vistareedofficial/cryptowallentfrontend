@@ -8,9 +8,9 @@ const Login = () => {
     email: '',
     password: '',
   });
-
+  
   const [responseMessage, setResponseMessage] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initialize isLoggedIn state to false
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,6 +20,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await fetch('http://localhost:8000/auth/login/', {
@@ -34,17 +35,18 @@ const Login = () => {
 
       if (response.ok) {
         console.log('Login successful:', data);
-        AuthService.setTokens(data.tokens); // Set access token
-        setIsLoggedIn(true); // Update isLoggedIn state to true after successful login
+        AuthService.setTokens(data.tokens);
         setResponseMessage(data.message || 'Login successful!');
-        navigate('/dashboard'); // Redirect to the dashboard after successful login
+        setTimeout(() => navigate('/dashboard'), 2000);
       } else {
         console.error('Login failed:', data);
         setResponseMessage(`Login failed. ${data.message || 'Please try again later.'}`);
       }
     } catch (error) {
       console.error('Error during login:', error);
-      setResponseMessage('An error occurred. Please try again later.');
+      setResponseMessage('Your account is not activated. Please contact Admin.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,10 +78,11 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
+        </button>
         <br />
 
-        {/* Display response message */}
         {responseMessage && <p className="response-message">{responseMessage}</p>}
 
         <p>

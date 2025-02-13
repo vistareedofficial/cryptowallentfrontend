@@ -1,130 +1,75 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate for navigation
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './SignUp.css'; // Import your custom CSS file for styling
+import './SignUp.css';
 
 const SignupForm = () => {
-  // State variables for form fields and messages
   const [fullname, setFullname] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessages, setErrorMessages] = useState({
-    fullname: '',
-    username: '',
-    password: '',
-    email: '',
-    phoneNumber: '',
-  });
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const navigate = useNavigate();
 
-  // Function to handle form submission
   const handleSignup = async (e) => {
     e.preventDefault();
+    
+    const errors = {};
+    // Required field validation
+    if (!fullname) errors.fullname = 'Fullname is required';
+    if (!username) errors.username = 'Username is required';
+    if (!password) errors.password = 'Password is required';
+    if (!email) errors.email = 'Email is required';
+    if (!phoneNumber) errors.phoneNumber = 'Phone Number is required';
 
-    // Validate input fields
-    if (!fullname) {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, fullname: 'Fullname is required' }));
-      return;
-    } else {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, fullname: '' }));
+    // Password length validation
+    if (password && password.length < 8) {
+      errors.password = 'Password must be at least 8 characters';
     }
 
-    if (!username) {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, username: 'Username is required' }));
+    // If there are any errors, set them and return
+    if (Object.keys(errors).length > 0) {
+      setErrorMessages(errors);
       return;
-    } else {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, username: '' }));
     }
 
-    if (!password) {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, password: 'Password is required' }));
-      return;
-    } else {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, password: '' }));
-    }
+    const user = { fullname, username, password, email, phone_number: phoneNumber };
 
-    if (!email) {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, email: 'Email is required' }));
-      return;
-    } else {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, email: '' }));
-    }
-
-    if (!phoneNumber) {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, phoneNumber: 'Phone Number is required' }));
-      return;
-    } else {
-      setErrorMessages((prevErrors) => ({ ...prevErrors, phoneNumber: '' }));
-    }
-
-    // Create user object with form data
-    const user = {
-      fullname: fullname, 
-      username: username,
-      password: password,
-      email: email,
-      phone_number: phoneNumber,
-    };
-
+    setIsLoading(true);
     try {
-      // Make a POST request to the API endpoint
-      const response = await axios.post('https://info.dreglogistics.com/auth/signup', user, {
+      const response = await axios.post('https://info.dreglogistics.com/auth/signup/', user, {
         headers: {
           'Content-Type': 'application/json',
-          // Add any other headers if needed for your CORS configuration
+          'Accept': 'application/json',
         },
       });
 
-      // Check if 'response' and 'response.data' exist before logging
-      if (response && response.data) {
-        // Check for the existence of 'message' and 'data' in the response
-        if (response.data.message && response.data.data) {
-          setSuccessMessage(response.data.message);
-          // Clear previous error message
-          setErrorMessages({
-            fullname: '',
-            username: '',
-            password: '',
-            email: '',
-            phoneNumber: '',
-          });
-          
-          // Redirect to login page after successful signup
+      if (response?.data?.message) {
+        setSuccessMessage(response.data.message);
+        setErrorMessages({});
+
+        // Display success message for 3 seconds before redirecting
+        setTimeout(() => {
           navigate('/Login');
-        } else {
-          console.log('Unexpected response structure:', response.data);
-          setSuccessMessage('');
-          setErrorMessages({ ...errorMessages, general: 'Unexpected response structure' });
-        }
+        }, 3000);
       } else {
-        console.log('Signup successful but no data returned');
-        setSuccessMessage('');
-        setErrorMessages({ ...errorMessages, general: 'Signup successful but no data returned' });
+        throw new Error('Unexpected response structure');
       }
     } catch (error) {
-      // Handle errors (e.g., show error message)
-      if (error.response && error.response.data && error.response.data.non_field_errors) {
-        setSuccessMessage('');
-        setErrorMessages({ ...errorMessages, general: `Error: ${error.response.data.non_field_errors.join(', ')}` });
-      } else {
-        console.error('Signup failed:', error.message);
-        setSuccessMessage('');
-        setErrorMessages({ ...errorMessages, general: `Signup failed: ${error.message}` });
-      }
+      setSuccessMessage('');
+      setErrorMessages({ general: error.response?.data?.message || error.message });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div style={{ marginBottom: '100px' }}>
-      {successMessage && <div className="alert alert-success">{successMessage}</div>}
-
-      {errorMessages.general && <div className="alert alert-danger">{errorMessages.general}</div>}
-
-      <form>
+      <form onSubmit={handleSignup}>
         <label>
           Full Name:
           <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} />
@@ -140,26 +85,27 @@ const SignupForm = () => {
           <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
           {errorMessages.username && <div className="error-message">{errorMessages.username}</div>}
         </label>
-        <br />
         <label>
           Password:
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           {errorMessages.password && <div className="error-message">{errorMessages.password}</div>}
         </label>
-        <br />
         <label>
           Phone Number:
           <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           {errorMessages.phoneNumber && <div className="error-message">{errorMessages.phoneNumber}</div>}
         </label>
-        <br />
         <div style={{ textAlign: 'center' }}>
-          <button type="button" onClick={handleSignup}>
-            Signup
+          {successMessage && (
+            <div className="alert alert-success" style={{ color: 'green', marginBottom: '10px' }}>
+              {successMessage}
+            </div>
+          )}
+          {errorMessages.general && <div className="alert alert-danger">{errorMessages.general}</div>}
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Signing Up...' : 'Signup'}
           </button>
-          <p>
-            Already have an account? <Link to="/Login">Sign In</Link>
-          </p>
+          <p>Already have an account? <Link to="/Login">Sign In</Link></p>
         </div>
       </form>
     </div>
