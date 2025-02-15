@@ -25,7 +25,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2025 Columbia Records</p>
+          <p>&copy; 2025 Columbia Records.</p>
         </div>
       </div>
     </footer>
