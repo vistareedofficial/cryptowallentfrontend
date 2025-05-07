@@ -1,131 +1,135 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
-import Navbar from '../Navbar/Navbar';
-import Subscriptionservice from '../Subscriptionservice/Subscriptionservice';
+import { FaWallet, FaUserCircle, FaBitcoin, FaChartLine } from 'react-icons/fa';
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
+import AuthService from '../AuthService/AuthService';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [fullName, setFullName] = useState('');
+  const [balance, setBalance] = useState(0.0);
+  const [userName, setUserName] = useState('');
+  const [assets, setAssets] = useState([]);
   const [error, setError] = useState(null);
-
-  // Function to get access token from localStorage
-  const getAccessToken = () => {
-    return localStorage.getItem('access_token');
-  };
-
+  const [marketData, setMarketData] = useState([]);
+  
   useEffect(() => {
-    const fetchFullName = async () => {
-      const token = getAccessToken();
-      console.log('Access Token:', token);  // Debugging
-  
-      if (!token) {
-        setError('No access token found. Please log in.');
-        return;
-      }
-  
+    const token = localStorage.getItem('access_token');
+
+    if (!token) {
+      setError('Please log in.');
+      return;
+    }
+
+    const decoded = jwtDecode(token);
+    const isExpired = decoded.exp * 1000 < Date.now();
+
+    if (isExpired) {
+      console.warn('Token expired. Logging out...');
+      AuthService.clearTokens();
+      setError('Session expired. Please log in again.');
+      return;
+    }
+
+    const userId = decoded.sub || decoded.user_id;
+    if (!userId) {
+      setError('Invalid token. Please log in again.');
+      return;
+    }
+
+    const fetchProfileAndAssets = async () => {
       try {
-        const response = await fetch('http://localhost:8000/auth/get-fullname/', {
+        const profileRes = await axios.get(`http://127.0.0.1:8000/users/crypto-user/profile?user_id=${userId}`, {
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+          },
         });
-  
-        console.log('Response Status:', response.status);  // Debugging
-        if (!response.ok) {
-          throw new Error('Failed to fetch full name');
-        }
-  
-        const data = await response.json();
-        setFullName(data.fullname);
-      } catch (error) {
-        console.error('Fetch error:', error);
-        setError(error.message);
+
+        const user = profileRes.data.user;
+        setUserName(user.full_name);
+
+        const assetRes = await axios.get(`http://127.0.0.1:8000/coins/total-assets?user_id=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+          },
+        });
+
+        const assetData = assetRes.data;
+        setAssets(assetData);
+
+        const totalUSD = assetData.reduce((acc, item) => acc + parseFloat(item.balance), 0);
+        setBalance(totalUSD);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch data.');
       }
     };
-  
-    fetchFullName();
+
+    const fetchMarketData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/coins/coins/all');
+        setMarketData(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchProfileAndAssets();
+    fetchMarketData();
   }, []);
 
-
-  const latestUpdates = [
-    { id: 1, title: 'New Album Announcement', description: 'Exciting news! Harry Styles is work on a new album that is to be released soon. Stay tuned for more updates.' },
-    { id: 2, title: 'Ongoing Tour', description: 'No ongoing tour for now' },
-  ];
-
-  const fanSpotlight = [
-    { id: 1, name: 'Emily Johnson', description: 'Emily is a dedicated fan of Harry Styles, attending every concert and supporting his music on social media. She loves connecting with other fans and sharing her enthusiasm for the Artist.' },
-    { id: 2, name: 'David Martinez', description: 'David has been following Harry Styles since their early days and has a deep appreciation for his music. He enjoys collecting memorabilia and meeting fellow fans at concerts.' },
-  ];
-
-  const contestsAndGiveaways = [
-    { id: 1, title: 'Fan Art Contest', description: 'Fans with a membership subscription can submit their fan art to info@hsfanclub-columbiarecords.com for a chance to win exclusive merchandise and a shoutout from the Artist!' },
-    { id: 2, title: 'Ticket Giveaway', description: 'Enter for a chance to win tickets to our upcoming concert. Don\'t miss out on this opportunity! Subscribe for a membership plan now.' },
-  ];
-
-  const upcomingEvents = [
-    { id: 1, date: 'No information yet', title: 'No information yet', location: 'No information yet' },
-    { id: 2, date: 'No information yet', title: 'No information yet', location: 'No information yet' },
-  ];
-
   return (
-    <>
-      {/* <Navbar /> */}
-      <div className="dashboard-container">
-        <h2>Welcome, Fan</h2>
-        {/* {error && <p className="error">Error: {error}</p>} */}
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <div className="wallet-balance desktop-hidden">
+          <FaWallet className="wallet-icon" />
+          <div>
+            <p className="label">Wallet Balance</p>
+            <h3>{balance.toFixed(2)} USD</h3>
+          </div>
+        </div>
 
-        <section className="section">
-          <h3>Latest Updates</h3>
-          <ul>
-            {latestUpdates.map((update) => (
-              <li key={update.id}>
-                <strong>{update.title}</strong>
-                <p>{update.description}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="section">
-          <h3>Fan Spotlight</h3>
-          <ul>
-            {fanSpotlight.map((fan) => (
-              <li key={fan.id}>
-                <strong>{fan.name}</strong>
-                <p>{fan.description}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="section">
-          <h3>Contests and Giveaways</h3>
-          <ul>
-            {contestsAndGiveaways.map((contest) => (
-              <li key={contest.id}>
-                <strong>{contest.title}</strong>
-                <p>{contest.description}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="section">
-          <h3>Upcoming Events</h3>
-          <ul>
-            {upcomingEvents.map((event) => (
-              <li key={event.id}>
-                <strong>{event.date}</strong>
-                <p>{event.title} - {event.location}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <div className="button-group">
+          <Link to='/DepositCrypto'>
+            <button className="dashboard-button small">Deposit</button>
+          </Link>
+          <Link to="/PreWithdrawal">
+            <button className="dashboard-button small withdraw">Withdraw</button>
+          </Link>
+        </div>
       </div>
-      <div>
-        <Subscriptionservice />
+
+      <div className="profile-card">
+        <FaUserCircle size={60} className="profile-icon" />
+        <h3>{userName}</h3>
       </div>
-    </>
+
+      <section className="section asset-section">
+        <h3><FaBitcoin className="section-icon" /> Total Assets</h3>
+        <ul>
+          {assets.map((asset) => (
+            <li key={asset.token_symbol}>
+              {asset.token_symbol}: {asset.balance}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="section market-section">
+        <h3><FaChartLine className="section-icon" /> Market Overview</h3>
+        <ul>
+          {marketData.map((coin) => (
+            <li key={coin.symbol}>
+              {coin.name} ({coin.symbol}): ${coin.price_in_usd.toFixed(2)}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {error && <p className="error-message">{error}</p>}
+    </div>
   );
 };
 

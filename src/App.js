@@ -16,12 +16,17 @@ import CreditCardInputPage from './components/CreditCardInputPage/CreditCardInpu
 import BitcoinPaymentPage from './components/BitcoinPaymentPage/BitcoinPaymentPage'
 import GiftCardPaymentPage from './components/GiftCardPaymentPage/GiftCardPaymentPage'
 import Contact from './components/Contact/Contact'
-
+import OtpVerification from './components/OtpVerification/OtpVerification';
+import WithdrawCrypto from './components/WithdrawCrypto/WithdrawCrypto'
+import PreWithdrawal from './components/PreWithdrawal/PreWithdrawal'
+import DepositCrypto from './components/DepositCrypto/DepositCrypto'
+// import DepositCrypto from './components/DepositCrypto'
 
 function App() {
   return (
     <Router>
       <Navbar />
+      <div className="main-content">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
@@ -30,13 +35,18 @@ function App() {
         <Route path="/RegularSubscription" element={<RegularSubscription />} />
         <Route path="/PremiumSubscription" element={<PremiumSubscription />} />
         <Route path="/VIPSubscription" element={<VIPSubscription />} />
+        <Route path="/PreWithdrawal" element={<PreWithdrawal />} />
         <Route path="/PaymentOptionsPage" element={<PaymentOptionsPage />} />
+        <Route path="/DepositCrypto" element={<DepositCrypto />} />
         <Route path="/CreditCardInputPage" element={<CreditCardInputPage />} />
+        <Route path="/WithdrawCrypto" element={<WithdrawCrypto />} />
         <Route path="/BitcoinPaymentPage" element={<BitcoinPaymentPage />} />
         <Route path="/GiftCardPaymentPage" element={<GiftCardPaymentPage />} />
+        <Route path="/OtpVerification" element={<OtpVerification />} />
         <Route path="/Contact" element={<Contact />} />
 
       </Routes>
+      </div>
       <Footer />
     </Router>
   );

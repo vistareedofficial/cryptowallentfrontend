@@ -1,115 +1,132 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 import './SignUp.css';
 
-const SignupForm = () => {
-  const [fullname, setFullname] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessages, setErrorMessages] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+const CryptoSignup = () => {
+  const [formData, setFormData] = useState({
+    full_name: '',
+    user_name: '',
+    phone_number: '',
+    email: '',
+    password: '',
+    referral_code: ''
+  });
 
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const errors = {};
-    // Required field validation
-    if (!fullname) errors.fullname = 'Fullname is required';
-    if (!username) errors.username = 'Username is required';
-    if (!password) errors.password = 'Password is required';
-    if (!email) errors.email = 'Email is required';
-    if (!phoneNumber) errors.phoneNumber = 'Phone Number is required';
+    setError('');
+    setLoading(true);
 
-    // Password length validation
-    if (password && password.length < 8) {
-      errors.password = 'Password must be at least 8 characters';
-    }
-
-    // If there are any errors, set them and return
-    if (Object.keys(errors).length > 0) {
-      setErrorMessages(errors);
-      return;
-    }
-
-    const user = { fullname, username, password, email, phone_number: phoneNumber };
-
-    setIsLoading(true);
     try {
-      const response = await axios.post('https://info.hsfanclub-columbiarecords.com/auth/signup/', user, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      });
+      const res = await axios.post(
+        'http://127.0.0.1:8000/users/pre-register/crypto-user/new/',
+        formData,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      );
 
-      if (response?.data?.message) {
-        setSuccessMessage(response.data.message);
-        setErrorMessages({});
+      if (res?.data) {
+        // Store phone number, email, and referral code for OTP verification
+        localStorage.setItem('phone_number', formData.phone_number);
+        localStorage.setItem('email', formData.email); // Store email in localStorage
+        localStorage.setItem('referral_code', formData.referral_code);
 
-        // Display success message for 3 seconds before redirecting
-        setTimeout(() => {
-          navigate('/Login');
-        }, 3000);
-      } else {
-        throw new Error('Unexpected response structure');
+        setSuccessMessage('Signup successful! Redirecting to OTP verification...');
+        setTimeout(() => navigate('/OtpVerification'), 3000);
       }
-    } catch (error) {
-      setSuccessMessage('');
-      setErrorMessages({ general: error.response?.data?.message || error.message });
+    } catch (err) {
+      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ marginBottom: '100px' }}>
-      <form onSubmit={handleSignup}>
-        <label>
-          Full Name:
-          <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} />
-          {errorMessages.fullname && <div className="error-message">{errorMessages.fullname}</div>}
-        </label>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          {errorMessages.email && <div className="error-message">{errorMessages.email}</div>}
-        </label>
-        <label>
-          Username:
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-          {errorMessages.username && <div className="error-message">{errorMessages.username}</div>}
-        </label>
-        <label>
-          Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          {errorMessages.password && <div className="error-message">{errorMessages.password}</div>}
-        </label>
-        <label>
-          Phone Number:
-          <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-          {errorMessages.phoneNumber && <div className="error-message">{errorMessages.phoneNumber}</div>}
-        </label>
-        <div style={{ textAlign: 'center' }}>
-          {successMessage && (
-            <div className="alert alert-success" style={{ color: 'green', marginBottom: '10px' }}>
-              {successMessage}
-            </div>
-          )}
-          {errorMessages.general && <div className="alert alert-danger">{errorMessages.general}</div>}
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Signing Up...' : 'Signup'}
-          </button>
-          <p>Already have an account? <Link to="/Login">Sign In</Link></p>
-        </div>
+    <div className="crypto-signup-container">
+      <form className="crypto-signup-form" onSubmit={handleSubmit}>
+        <h2>🚀 Create Your Crypto Account</h2>
+
+        {error && <div className="crypto-error">{error}</div>}
+        {successMessage && <div className="crypto-success">{successMessage}</div>}
+
+        <input
+          type="text"
+          name="full_name"
+          placeholder="Full Name"
+          value={formData.full_name}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="user_name"
+          placeholder="Username"
+          value={formData.user_name}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="phone_number"
+          placeholder="Phone Number"
+          value={formData.phone_number}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="referral_code"
+          placeholder="Referral Code (optional)"
+          value={formData.referral_code}
+          onChange={handleChange}
+        />
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Creating Account...' : 'Sign Up'}
+        </button>
+
+        <p>Already have an account? <Link to="/Login">Login</Link></p>
       </form>
     </div>
   );
 };
 
-export default SignupForm;
+export default CryptoSignup;

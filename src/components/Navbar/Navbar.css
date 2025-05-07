@@ -1,133 +1,191 @@
-/* Navbar.css */
-
-.navbar {
-  background-color: #ffffff;
-  color: #252323;
-  padding: 3px 0;
-  border-bottom: 2px solid #8f8888; /* Add bottom border */
+/* Base font styling */
+body, .crypto-navbar {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px; /* Adjust padding as needed */
-  background-color: #fff; /* Adjust background color if needed */
-  border-bottom: 2px solid #8f8888; /* Add bottom border */
+/* Navbar container */
+.crypto-navbar {
+  background: #121212;
+  color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-
-.navbar-container {
-  display: flex;
-  justify-content: space-between; /* Align items to the ends */
-  align-items: center;
+/* Navbar content layout */
+.nav-content {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.navbar-logo {
-  font-size: 1.5rem;
-  color: #000000;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.navbar-menu {
-  list-style: none;
-  display: flex;
-  margin: 0;
-}
-
-.navbar-item {
-  margin-right: 20px;
-}
-
-.navbar-link {
-  color: #000000;
-  text-decoration: none;
-  font-weight: bold;
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* <-- this aligns logo to left and toggle to right */
+
 }
 
-.navbar-toggle {
-  font-size: 2rem; /* Increase icon size */
+/* Logo styles */
+.nav-logo {
+  margin-right: auto;
+}
+.nav-logo img {
+  height: 50px;
+}
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  transition: max-height 0.3s ease;
+}
+
+.nav-links a,
+.nav-links .logout-btn {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-icon {
+  color: #00ffae;
+  font-size: 1.1rem;
+}
+
+.nav-links a:hover,
+.nav-links .logout-btn:hover {
+  color: #00ffae;
+}
+
+/* Logout button */
+.logout-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  margin-right: 10px; /* Adjust margin-right as needed */
+  gap: 0.5rem;
+}
+
+/* Menu toggle (hamburger) */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #ffffff;
+  cursor: pointer;
+
+}
+
+/* Balance display box */
+.balance-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.balance-usdt,
+.balance-btc {
+  margin: 0;
+  font-size: 15px;
+}
+
+/* Balance error */
+.balance-error {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: red;
+  font-weight: 500;
+  font-size: 15px;
+  background-color: rgba(255, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+/* Bottom nav bar styles (mobile only) */
+.bottom-nav {
   display: none;
 }
+@media (max-width: 768px) {
+  .nav-content {
+    padding: 0.75rem 1rem;
+  }
 
-/* Change toggle icon when menu is open */
-.navbar-menu.show ~ .navbar-toggle {
-  transform: rotate(90deg); /* Rotate icon */
-}
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+  }
 
-/* Float the image to the right */
-.navbar-logo-img {
-  margin-top: 5px; /* Adjust margin-top as needed */
-  width: 60%;
-}
-
-/* Responsive styles */
-@media only screen and (max-width: 600px) {
-  .navbar-container {
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1e1e1e;
     flex-direction: column;
     align-items: flex-start;
-    float: left !important;
+    overflow: hidden;
+    max-height: 0;
   }
 
-  .navbar-menu {
-    margin-top: 10px;
-    display: none; /* Initially hide the menu items */
-    z-index: 1;
+  .nav-links.open {
+    max-height: 500px;
+    padding: 1rem 0;
   }
 
-  .navbar-item {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  .navbar-toggle {
-    font-size: 1rem; /* Increase icon size */
-    cursor: pointer;
-    margin-left: auto; /* Move toggle icon to the right */
-    display: flex;
-    align-items: center; /* Align icon with logo */
-    top: 100px;
-  }
-
-  .navbar-link {
-    padding: 10px;
-    border-bottom: 1px solid #fff;
-    color: #ffffff; /* Set color to white */
-  }
-
-  /* Show the menu items when the toggle icon is clicked */
-  .navbar-menu.show {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    left: 0;
+  .nav-links a,
+  .nav-links .logout-btn {
     width: 100%;
-    background-color: #3498db;
-    padding: 10px;
-    padding-left: 20px; /* Add padding to the left */
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #333;
   }
 
-  /* Redirect to home page when HOME link is clicked */
-  .navbar-menu.show .navbar-link:nth-child(1) {
-    cursor: pointer;
-  }
-  .navbar-toggle {
-    font-size: 1rem; /* Increase icon size */
-    cursor: pointer;
-    margin-left: 150px; /* Float toggle icon to the right */
+  .balance-wrapper,
+  .balance-error {
+    display: none;
   }
 
-  .navbar-logo-img {
-    margin-top: -70px; /* Move the image up in mobile view */
-    margin-bottom: 10px;
+  .bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1e1e1e;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 999;
+    border-top: 1px solid #333;
   }
-  
+
+  .bottom-nav-item {
+    flex: 1;
+    text-align: center;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.4rem 0;
+  }
+
+  .bottom-nav-item span {
+    display: block;
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+  }
+
+  .bottom-nav-item .svg-inline--fa {
+    color: #00ffae;
+  }
 }

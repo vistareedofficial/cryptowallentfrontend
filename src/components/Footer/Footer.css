@@ -1,61 +1,123 @@
-.footer {
-  background-color: #333;
+.crypto-footer {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: #fff;
-  padding: 30px 0;
-  text-align: center;
+  padding: 50px 20px 30px;
+  font-family: 'Segoe UI', sans-serif;
+  margin-top: auto; /* Makes it push to the bottom if using flex layout */
 }
 
-.footer-container {
-  max-width: 1200px;
+.crypto-footer-container {
+  max-width: 1300px;
   margin: 0 auto;
 }
 
-.footer-content {
+.crypto-footer-top {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 30px;
 }
 
-.footer-left,
-.footer-center,
-.footer-right {
+.crypto-brand,
+.crypto-links,
+.crypto-support,
+.crypto-newsletter {
   flex: 1;
+  min-width: 220px;
 }
 
-.footer-left h3,
-.footer-center h3,
-.footer-right h3 {
+.crypto-brand h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #00ffb8;
+}
+
+.crypto-brand p {
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+.crypto-links h4,
+.crypto-support h4,
+.crypto-newsletter h4 {
   margin-bottom: 10px;
+  color: #00ffd5;
 }
 
-.footer-bottom {
-  margin-top: 20px;
-}
-
-.footer-bottom p {
-  margin: 0;
-}
-
-.footer-center ul {
-  list-style-type: none;
+.crypto-links ul,
+.crypto-support ul {
+  list-style: none;
   padding: 0;
 }
 
-.footer-center ul li {
-  margin-bottom: 10px;
+.crypto-links li,
+.crypto-support li {
+  margin-bottom: 8px;
 }
 
-.footer-center ul li a {
-  color: #fff;
+.crypto-links a,
+.crypto-support a {
   text-decoration: none;
+  color: #ccc;
+  font-size: 0.95rem;
 }
 
-.footer-center ul li a:hover {
-  text-decoration: underline;
+.crypto-links a:hover,
+.crypto-support a:hover {
+  color: #00ffb8;
 }
 
-/* Responsive styles */
-@media only screen and (max-width: 600px) {
-  .footer {
-    padding: 20px 0;
+.crypto-newsletter p {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.crypto-newsletter form {
+  display: flex;
+  gap: 10px;
+}
+
+.crypto-newsletter input[type="email"] {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.crypto-newsletter button {
+  background-color: #00ffb8;
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.crypto-newsletter button:hover {
+  background-color: #00e0a5;
+}
+
+.crypto-footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .crypto-footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .crypto-newsletter form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .crypto-newsletter input,
+  .crypto-newsletter button {
+    width: 100%;
   }
 }

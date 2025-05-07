@@ -1,0 +1,124 @@
+/* Main container for assets */
+.asset-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+    background-color: #1e1e2f;
+    border-radius: 10px;
+    color: #fff;
+  }
+  
+  /* Heading styling */
+  .selecttoken {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Block containing asset and optional detail */
+  .asset-block {
+    margin-bottom: 20px;
+  }
+  
+  /* Individual asset item */
+  .asset-item {
+    display: flex;
+    justify-content: space-between;
+    background: #2c2c3f;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .asset-item:hover {
+    background: #3a3a50;
+  }
+  
+  /* Token symbol */
+  .symbol {
+    font-weight: bold;
+  }
+  
+  /* Token balance */
+  .balance {
+    color: #ddd;
+  }
+  
+  /* Token details section */
+  .token-details {
+    background: #2c2c3f;
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  /* QR code container */
+  .qr-container {
+    margin-bottom: 15px;
+  }
+  
+  /* Address text */
+  .public-address {
+    font-size: 14px;
+    margin-bottom: 10px;
+    word-break: break-word;
+  }
+  
+  /* Copy button */
+  .copy-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .copy-btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Warning note */
+  .note {
+    color: #ff6666;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: red;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .asset-container {
+      padding: 15px;
+      max-width: 90%;
+    }
+  
+    .asset-item {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    .symbol, .balance {
+      font-size: 14px;
+    }
+  
+    .public-address, .note {
+      font-size: 12px;
+    }
+  
+    .copy-btn {
+      font-size: 13px;
+      padding: 6px 12px;
+    }
+  }
+  

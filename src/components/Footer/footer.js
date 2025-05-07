@@ -1,31 +1,44 @@
-// Footer.js
 import React from 'react';
 import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-content">
-          <div className="footer-left">
-            <h3>About Us</h3>
-            <p>Columbia Records is a leading music label...</p>
+    <footer className="crypto-footer">
+      <div className="crypto-footer-container">
+        <div className="crypto-footer-top">
+          <div className="crypto-brand">
+            <h2>VistaReed Exchange</h2>
+            <p>Empowering global finance through crypto. Trade securely and instantly with our all-in-one platform.</p>
           </div>
-          <div className="footer-center">
-            <h3>Quick Links</h3>
+          <div className="crypto-links">
+            <h4>Explore</h4>
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="">About</a></li>
-              <li><a href="">Contact</a></li>
+              <li><a href="/">Markets</a></li>
+              <li><a href="/wallet">Wallet</a></li>
+              <li><a href="/security">Security</a></li>
+              <li><a href="/fees">Fees</a></li>
             </ul>
           </div>
-          <div className="footer-right">
-            <h3>Contact Us</h3>
-            <p>Email: info@hsfanclub-columbiarecords.com</p>
+          <div className="crypto-support">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="/help">Help Center</a></li>
+              <li><a href="/terms">Terms of Use</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/contact">Contact Us</a></li>
+            </ul>
+          </div>
+          <div className="crypto-newsletter">
+            <h4>Stay Updated</h4>
+            <p>Subscribe to get the latest news and market insights.</p>
+            <form>
+              <input type="email" placeholder="Your email" />
+              <button type="submit">Subscribe</button>
+            </form>
           </div>
         </div>
-        <div className="footer-bottom">
-          <p>&copy; 2025 Columbia Records.</p>
+        <div className="crypto-footer-bottom">
+          <p>&copy; 2025 VistaReed Exchange. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -1,0 +1,25 @@
+/* Make sure the full viewport height is used */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Set up a flex layout on the body or root */
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  /* This class should wrap all your main page content */
+  .main-content {
+    flex: 1;
+  }
+  

@@ -1,0 +1,40 @@
+.crypto-subscription-section {
+    background: linear-gradient(to right, #0f0f0f, #1c1c1c);
+    color: #fff;
+    padding: 60px 20px;
+    min-height: 100vh;
+  }
+  
+  .crypto-card {
+    background-color: #222;
+    border: 1px solid #444;
+    padding: 40px;
+    height: 100%;
+    color: #ccc;
+  }
+  
+  .crypto-card .card-header {
+    background-color: #333;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #fff;
+    border-bottom: 1px solid #444;
+  }
+  
+  .crypto-card ul {
+    list-style-type: none;
+    padding-left: 0;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .crypto-card li {
+    margin-bottom: 10px;
+  }
+  
+  .crypto-card .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 50px;
+  }
+  

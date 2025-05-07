@@ -1,0 +1,95 @@
+/* Main container for assets */
+.asset-container {
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  /* Individual asset item */
+  .asset-item {
+    display: flex;
+    justify-content: space-between;
+    background: #f9f9f9;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background 0.2s;
+  }
+  
+  /* Styling for text inside assets */
+  .selecttoken {
+    color: aliceblue;
+  }
+  
+  .asset-item:hover {
+    background: #eaeaea;
+  }
+  
+  /* Link styling to remove default underline */
+  .asset-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Symbol (token name) styling */
+  .symbol {
+    font-weight: bold;
+  }
+  
+  /* Balance text styling */
+  .balance {
+    color: #333;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    /* Adjust container padding and max-width on smaller screens */
+    .asset-container {
+      padding: 15px;
+      max-width: 90%;  /* Take up more width on smaller screens */
+    }
+  
+    /* Adjust asset item to stack vertically on small screens */
+    .asset-item {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 12px;
+    }
+  
+    /* Style changes for symbol and balance on mobile */
+    .symbol, .balance {
+      font-size: 14px;  /* Make text a bit smaller */
+    }
+  
+    /* Ensure there's no overflow on very small screens */
+    .asset-item {
+      word-wrap: break-word;
+    }
+  }
+  
+  /* Even smaller screen adjustments (e.g., for mobile portrait devices) */
+  @media (max-width: 480px) {
+    .symbol {
+      font-size: 12px;
+    }
+  
+    .balance {
+      font-size: 12px;
+    }
+  
+    .asset-container {
+      padding: 10px;
+    }
+  
+    .asset-item {
+      padding: 10px;
+    }
+  
+    .selecttoken {
+      font-size: 14px;
+    }
+  }
+  

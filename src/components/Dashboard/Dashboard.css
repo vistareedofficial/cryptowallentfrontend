@@ -1,142 +1,139 @@
 .dashboard-container {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 600px;
+  margin: auto;
   padding: 20px;
+  background: #1e1e2f;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Welcome Message */
-.welcome-message {
-  background-color: #f5f5f5;
-  padding: 20px;
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.wallet-balance {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wallet-icon {
+  font-size: 32px;
+  color: #f0c040;
+}
+
+.label {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard-button {
+  padding: 8px 16px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dashboard-button.withdraw {
+  background-color: #dc3545;
+}
+
+.profile-card {
+  background: #2d2d44;
+  padding: 15px;
   border-radius: 8px;
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.welcome-message h2 {
-  color: #333;
+.profile-icon {
+  color: #aaa;
 }
 
-/* Subscription Section */
-.subscription-section {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
+.section {
+  background: #2c2c3c;
+  padding: 15px;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-.subscription-section h3 {
-  color: #333;
+.section h3 {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 
-.subscription-form {
-  margin-top: 10px;
+.section-icon {
+  margin-right: 8px;
+  color: #f0c040;
 }
 
-.subscription-form input[type="email"] {
-  width: 100%;
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  padding: 6px 0;
+  border-bottom: 1px solid #444;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+.error-message {
+  background-color: #ff4d4d;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
 }
 
-.subscription-form button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wallet-balance {
+    margin-bottom: 15px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .dashboard-button {
+    width: 100%;
+  }
 }
 
-/* Latest Updates Section */
-.latest-updates {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
+/* Hide wallet balance in desktop view */
+@media screen and (min-width: 769px) {
+  .desktop-hidden {
+    display: none;
+  }
 
-.latest-updates h3 {
-  color: #333;
-}
-
-.latest-updates ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.latest-updates li {
-  margin-bottom: 10px;
-}
-
-.latest-updates li a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-/* Fan Spotlight Section */
-.fan-spotlight {
-  background-color: #f5f5f5;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.fan-spotlight h3 {
-  color: #333;
-}
-
-/* Contests and Giveaways Section */
-.contests-giveaways {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.contests-giveaways h3 {
-  color: #333;
-}
-
-.contests-giveaways .cta-button {
-  margin-top: 10px;
-}
-
-.contests-giveaways .cta-button button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Events Section */
-.events {
-  background-color: #f5f5f5;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.events h3 {
-  color: #333;
-}
-
-.events ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.events li {
-  margin-bottom: 10px;
-}
-
-.events li a {
-  color: #007bff;
-  text-decoration: none;
+  .desktop-visible {
+    display: block;
+  }
 }

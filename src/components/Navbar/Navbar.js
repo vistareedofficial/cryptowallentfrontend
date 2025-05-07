@@ -1,34 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthService from '../AuthService/AuthService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignInAlt, faHome, faBars, faUsers, faCompactDisc, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faTimes,
+  faHome,
+  faChartLine,
+  faExchangeAlt,
+  faUserCircle,
+  faSignOutAlt,
+  faCoins 
+} from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
-import riserise from "../Images/riserise.PNG";
-import columbia from "../Images/columbia.PNG";
+import logo from '../Images/vistareedddddddddd.JPG';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import AuthService from '../AuthService/AuthService';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [balance, setBalance] = useState(null);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkLoginStatus = () => {
-      setIsLoggedIn(AuthService.isLoggedIn());
-    };
-
-    checkLoginStatus(); // Check login status when component mounts
-
-    // Subscribe to login status changes
-    const unsubscribe = AuthService.subscribe(checkLoginStatus);
-
-    // Unsubscribe from login status changes when component unmounts
-    return () => unsubscribe();
+    const checkLogin = () => setIsLoggedIn(AuthService.isLoggedIn());
+    checkLogin();
+    const unsub = AuthService.subscribe(checkLogin);
+    return () => unsub();
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const token = localStorage.getItem('access_token');
+
+      if (!token) {
+        console.warn('No token found. Please log in.');
+        setError('Please log in.');
+        return;
+      }
+
+      try {
+        const decoded = jwtDecode(token);
+        const isExpired = decoded.exp * 1000 < Date.now();
+
+        if (isExpired) {
+          console.warn('Token expired. Logging out...');
+          AuthService.clearTokens();
+          setIsLoggedIn(false);
+          setError('Session expired. Please log in again.');
+          return;
+        }
+
+        const userId = decoded.sub || decoded.user_id;
+        if (!userId) {
+          setError('Invalid token. Please log in again.');
+          return;
+        }
+
+        const response = await axios.get(
+          `http://127.0.0.1:8000/coins/crypto/balance?user_id=${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: 'application/json',
+            },
+          }
+        );
+
+        setBalance(response.data);
+        setError('');
+      } catch (err) {
+        console.error('Error fetching balance:', err);
+        setError('Failed to fetch balance.');
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchBalance();
+    }
+  }, [isLoggedIn]);
+
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   const handleLogout = () => {
     AuthService.clearTokens();
@@ -37,70 +91,92 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
-       <br/>
-        <br/>
-        <br/>
-        <div className={`navbar-toggle ${isMenuOpen ? 'close-menu' : ''}`} onClick={toggleMenu}>
-          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
-        </div>
-      <a href='/'>
-        <img src={columbia} alt="Riserise Logo" className="navbar-logo-img" />
-      </a>
-      <div className="navbar-container">
-        <ul className={`navbar-menu ${isMenuOpen ? 'show' : ''}`}>
-          <li className="navbar-item">
-            <Link to="/" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
-              HOME
-            </Link>
-          </li>
-          <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
-            <Link to="/" className="navbar-link">
-              ARTISTS
-            </Link>
-          </li>
-          <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
-            <Link to="/" className="navbar-link">
-              RELEASES
-            </Link>
-          </li>
-          <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
-            <Link to="/Contact" className="navbar-link">
-              CONTACT
-            </Link>
-          </li>
-          {isLoggedIn ? (
-            <>
-              <li className="navbar-item" onClick={() => setIsMenuOpen(false)}>
-                <Link to="/dashboard" className="navbar-link">
-                  DASHBOARD
-                </Link>
-              </li>
-              <li className="navbar-item">
-                <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="navbar-link">
-                  LOGOUT
-                </button>
-              </li>
+    <>
+      <nav className="crypto-navbar">
+        <div className="nav-content">
+          <Link to="/" className="nav-logo">
+            <img src={logo} alt="VistaReed Crypto" />
+          </Link>
 
-            </>
-          ) : (
-            <>
-              <li className="navbar-item">
-                <Link to="/signup" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
-                  SIGN UP
-                </Link>
-              </li>
-              <li className="navbar-item">
-                <Link to="/login" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
-                  LOGIN
-                </Link>
-              </li>
-            </>
+          {isLoggedIn && balance && !error && (
+            <div className="balance-wrapper">
+              <p className="balance-usdt">Account Balance</p>
+              <p className="balance-usdt">USD: {balance.total_balance_usdt.toLocaleString()}</p>
+              <p className="balance-btc">= {balance.total_balance_btc.toFixed(6)} BTC</p>
+            </div>
           )}
-        </ul>
-        
+
+          {error && isLoggedIn && (
+            <div className="balance-error">{error}</div>
+          )}
+
+          <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+            <Link to="/" onClick={toggleMenu}>
+              <FontAwesomeIcon icon={faHome} className="nav-icon" /> Home
+            </Link>
+            <Link to="/" onClick={toggleMenu}>
+              <FontAwesomeIcon icon={faChartLine} className="nav-icon" /> Market
+            </Link>
+            <Link to="/" onClick={toggleMenu}>
+              <FontAwesomeIcon icon={faExchangeAlt} className="nav-icon" /> Trade
+            </Link>
+            <Link to="/contact" onClick={toggleMenu}>
+              <FontAwesomeIcon icon={faUserCircle} className="nav-icon" /> Contact
+            </Link>
+
+            {isLoggedIn ? (
+              <>
+                <Link to="/dashboard" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faCoins} className="nav-icon" /> Assets
+                </Link>
+                <button
+                  className="logout-btn"
+                  onClick={() => {
+                    handleLogout();
+                    toggleMenu();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faSignOutAlt} className="nav-icon" /> Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/signup" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faUserCircle} className="nav-icon" /> Sign Up
+                </Link>
+                <Link to="/login" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faSignOutAlt} className="nav-icon" /> Login
+                </Link>
+              </>
+            )}
+          </div>
+
+          <button className="menu-toggle" onClick={toggleMenu}>
+            <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
+          </button>
+        </div>
+      </nav>
+
+      {/* Bottom Mobile Navbar */}
+      <div className="bottom-nav">
+        <Link to="/" className="bottom-nav-item">
+          <FontAwesomeIcon icon={faHome} />
+          <span>Home</span>
+        </Link>
+        <Link to="/" className="bottom-nav-item center">
+          <FontAwesomeIcon icon={faChartLine} />
+          <span>Market</span>
+        </Link>
+        <Link to="/" className="bottom-nav-item center">
+          <FontAwesomeIcon icon={faExchangeAlt} />
+          <span>Trade</span>
+        </Link>
+        <Link to="/dashboard" className="bottom-nav-item">
+          <FontAwesomeIcon icon={faCoins} />
+          <span>Assets</span>
+        </Link>
       </div>
-    </nav>
+    </>
   );
 };
 

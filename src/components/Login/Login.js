@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import AuthService from '../AuthService/AuthService';
-import './Login.css';
+import './Login.css'; // Reuse same styles as signup
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    phone_number: '',
     password: '',
   });
 
-  const [responseMessage, setResponseMessage] = useState({ message: '', isError: false });
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setError('');
+    setSuccessMessage('');
+    setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/auth/login/', {
+      const response = await fetch('http://127.0.0.1:8000/auth/login/crypto-user/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -34,64 +37,53 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Login successful:', data);
-        AuthService.setTokens(data.tokens);
-        setResponseMessage({ message: data.message || 'Login successful!', isError: false });
-        setTimeout(() => navigate('/dashboard'), 2000);
+        // Set tokens using AuthService
+        AuthService.setTokens(data.access_token, data.refresh_token);
+        console.log('Tokens Set:', data.access_token, data.refresh_token); // Debug line
+        setSuccessMessage(data.message || 'Login successful!');
+        setTimeout(() => navigate('/'), 1000);
       } else {
-        console.error('Login failed:', data);
-        setResponseMessage({ message: `Login failed. ${data.message || 'Please try again later.'}`, isError: true });
+        setError(data.message || 'Login failed. Please try again.');
       }
-    } catch (error) {
-      console.error('Error during login:', error);
-      setResponseMessage({ message: 'Your account is not activated. Please contact Admin.', isError: true });
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Something went wrong. Please try again later.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="login-container" style={{ marginBottom: '100px' }}>
-      <h2>Login</h2>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+    <div className="crypto-signup-container">
+      <form className="crypto-signup-form" onSubmit={handleSubmit}>
+        <h2>🔐 Crypto User Login</h2>
 
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {error && <div className="crypto-error">{error}</div>}
+        {successMessage && <div className="crypto-success">{successMessage}</div>}
 
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Login'}
+        <input
+          type="text"
+          name="phone_number"
+          placeholder="Phone Number"
+          value={formData.phone_number}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
         </button>
-        <br />
 
-        {responseMessage.message && (
-          <p className="response-message" style={{ color: responseMessage.isError ? 'red' : 'green' }}>
-            {responseMessage.message}
-          </p>
-        )}
-
-        <p>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
+        <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
       </form>
     </div>
   );

@@ -1,37 +1,69 @@
-// src\services\AuthService.js
+class AuthService {
+  static subscribers = [];
 
-const TOKEN_KEY = 'authToken';
-let subscribers = [];
+  static setTokens(accessToken, refreshToken) {
+    console.log('Setting tokens:', accessToken, refreshToken);  // Debugging log
+    localStorage.setItem('access_token', accessToken);
+    localStorage.setItem('refresh_token', refreshToken);
+    this.notifySubscribers();
+  }
 
-const notifySubscribers = () => {
-  subscribers.forEach(callback => callback());
-};
+  static clearTokens() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    this.notifySubscribers();
+  }
 
-const AuthService = {
-  getAccessToken: () => {
-    return localStorage.getItem(TOKEN_KEY);
-  },
+  static getAccessToken() {
+    return localStorage.getItem('access_token');
+  }
 
-  setTokens: (tokens) => {
-    localStorage.setItem(TOKEN_KEY, tokens.access);
-    notifySubscribers(); // Notify subscribers of login status change
-  },
+  static getRefreshToken() {
+    return localStorage.getItem('refresh_token');
+  }
 
-  clearTokens: () => {
-    localStorage.removeItem(TOKEN_KEY);
-    notifySubscribers(); // Notify subscribers of login status change
-  },
+  static isLoggedIn() {
+    const token = localStorage.getItem('access_token');
+    if (!token) return false;
 
-  isLoggedIn: () => {
-    return !!AuthService.getAccessToken();
-  },
+    try {
+      const payload = this.decodeToken(token);
+      const isExpired = payload.exp * 1000 < Date.now();
+      return !isExpired;
+    } catch (err) {
+      console.error('Invalid token:', err);
+      return false;
+    }
+  }
 
-  subscribe: (callback) => {
-    subscribers.push(callback); // Subscribe to login status changes
+  static decodeToken(token) {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (err) {
+      console.error('Error decoding token:', err);
+      return null;
+    }
+  }
+
+  static getUserId() {
+    const token = this.getAccessToken();
+    if (token) {
+      const decoded = this.decodeToken(token);
+      return decoded ? decoded.user_id : null;
+    }
+    return null;
+  }
+
+  static subscribe(callback) {
+    this.subscribers.push(callback);
     return () => {
-      subscribers = subscribers.filter(sub => sub !== callback); // Unsubscribe
+      this.subscribers = this.subscribers.filter((cb) => cb !== callback);
     };
   }
-};
+
+  static notifySubscribers() {
+    this.subscribers.forEach((cb) => cb(this.isLoggedIn()));
+  }
+}
 
 export default AuthService;

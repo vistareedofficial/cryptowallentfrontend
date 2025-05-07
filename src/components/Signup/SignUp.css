@@ -1,103 +1,89 @@
-/* SignUp.css */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
-/* Apply Bootstrap styles for responsiveness */
-@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
-
-/* Custom styles for the signup form */
-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-top: 50px;
+body {
+  background-color: #0f0f1c;
+  font-family: 'Orbitron', sans-serif;
 }
 
-label {
-  display: block;
-  margin-bottom: 8px;
+.crypto-signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  min-height: 100vh;
 }
 
-input {
+.crypto-signup-form {
+  background: #1a1a2e;
+  padding: 30px;
+  border-radius: 10px;
   width: 100%;
-  padding: 8px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
+  max-width: 400px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
+.crypto-signup-form h2 {
+  text-align: center;
+  color: #00fff7;
+  margin-bottom: 20px;
+}
+
+.crypto-signup-form input {
+  background-color: #13132a;
   border: none;
-  border-radius: 4px;
+  padding: 12px;
+  margin: 10px 0;
+  width: 100%;
+  color: #fff;
+  border-radius: 5px;
+  outline: none;
+  font-size: 14px;
+}
+
+.crypto-signup-form input::placeholder {
+  color: #aaa;
+}
+
+.crypto-signup-form button {
+  background: linear-gradient(to right, #00fff7, #6bffb8);
+  color: #000;
+  padding: 12px;
+  width: 100%;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Smooth transition for background color */
+  transition: opacity 0.3s ease-in-out;
 }
 
-button:hover {
-  background-color: #0056b3;
+.crypto-signup-form button:hover {
+  opacity: 0.85;
 }
 
-button:active {
-  background-color: #003366; /* Darker color when button is clicked */
+.crypto-error {
+  background-color: #ff4d4d;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-/* Add more styles as needed for your specific design preferences */
-
-/* Add the following style for error messages with a red background */
-.error-message {
-  background-color: #ffcccc; /* Light red */
-  color: #ff0000; /* Dark red */
-  padding: 8px;
-  border-radius: 4px;
-  margin-top: 5px;
+.crypto-success {
+  background-color: #00cc99;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-/* Add the following style for loading effect */
-.loading-text {
-  display: none;
-  color: #007bff; /* Loading text color */
+.crypto-signup-form p {
+  color: #aaa;
+  text-align: center;
+  margin-top: 20px;
 }
 
-.loading {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 4px solid #007bff; /* Loading spinner color */
-  border-radius: 50%;
-  border-top: 4px solid #f8f9fa; /* Background color */
-  animation: spin 1s linear infinite; /* Rotate animation */
+.crypto-signup-form a {
+  color: #00fff7;
+  text-decoration: none;
 }
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-.password-input {
-  position: relative;
-}
-
-.eye-icon {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
-
-.password-input-container {
-  position: relative;
-}
-
-.password-input-container button {
-  position: absolute;
-  top: 50%;
-  right: 5px;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
