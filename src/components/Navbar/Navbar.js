@@ -110,30 +110,31 @@ const Navbar = () => {
             <div className="balance-error">{error}</div>
           )}
 
+          {/* Desktop Navbar Links */}
           <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
-            <Link to="/" onClick={toggleMenu}>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
               <FontAwesomeIcon icon={faHome} className="nav-icon" /> Home
             </Link>
-            <Link to="/" onClick={toggleMenu}>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
               <FontAwesomeIcon icon={faChartLine} className="nav-icon" /> Market
             </Link>
-            <Link to="/" onClick={toggleMenu}>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
               <FontAwesomeIcon icon={faExchangeAlt} className="nav-icon" /> Trade
             </Link>
-            <Link to="/contact" onClick={toggleMenu}>
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
               <FontAwesomeIcon icon={faUserCircle} className="nav-icon" /> Contact
             </Link>
 
             {isLoggedIn ? (
               <>
-                <Link to="/dashboard" onClick={toggleMenu}>
+                <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
                   <FontAwesomeIcon icon={faCoins} className="nav-icon" /> Assets
                 </Link>
                 <button
                   className="logout-btn"
                   onClick={() => {
                     handleLogout();
-                    toggleMenu();
+                    setIsMenuOpen(false);
                   }}
                 >
                   <FontAwesomeIcon icon={faSignOutAlt} className="nav-icon" /> Logout
@@ -141,19 +142,20 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link to="/signup" onClick={toggleMenu}>
+                <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
                   <FontAwesomeIcon icon={faUserCircle} className="nav-icon" /> Sign Up
                 </Link>
-                <Link to="/login" onClick={toggleMenu}>
+                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
                   <FontAwesomeIcon icon={faSignOutAlt} className="nav-icon" /> Login
                 </Link>
               </>
             )}
           </div>
 
-          <button className="menu-toggle" onClick={toggleMenu}>
+          {/* Manual toggle icon without button */}
+          <div className="manual-toggle-icon" onClick={toggleMenu}>
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
-          </button>
+          </div>
         </div>
       </nav>
 

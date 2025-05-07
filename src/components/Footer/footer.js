@@ -14,17 +14,17 @@ const Footer = () => {
             <h4>Explore</h4>
             <ul>
               <li><a href="/">Markets</a></li>
-              <li><a href="/wallet">Wallet</a></li>
-              <li><a href="/security">Security</a></li>
-              <li><a href="/fees">Fees</a></li>
+              <li><a href="/">Wallet</a></li>
+              <li><a href="/">Security</a></li>
+              <li><a href="/">Fees</a></li>
             </ul>
           </div>
           <div className="crypto-support">
             <h4>Support</h4>
             <ul>
-              <li><a href="/help">Help Center</a></li>
-              <li><a href="/terms">Terms of Use</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/">Help Center</a></li>
+              <li><a href="/">Terms of Use</a></li>
+              <li><a href="/">Privacy Policy</a></li>
               <li><a href="/contact">Contact Us</a></li>
             </ul>
           </div>

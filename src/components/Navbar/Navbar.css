@@ -21,7 +21,6 @@ body, .crypto-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between; /* <-- this aligns logo to left and toggle to right */
-
 }
 
 /* Logo styles */
@@ -77,7 +76,6 @@ body, .crypto-navbar {
   font-size: 1.4rem;
   color: #ffffff;
   cursor: pointer;
-
 }
 
 /* Balance display box */
@@ -113,10 +111,22 @@ body, .crypto-navbar {
   border-radius: 8px;
 }
 
+.manual-toggle-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: #fff;
+  z-index: 1001;
+  cursor: pointer;
+  display: none; /* Hidden on desktop */
+}
+
 /* Bottom nav bar styles (mobile only) */
 .bottom-nav {
   display: none;
 }
+
 @media (max-width: 768px) {
   .nav-content {
     padding: 0.75rem 1rem;
@@ -187,5 +197,16 @@ body, .crypto-navbar {
 
   .bottom-nav-item .svg-inline--fa {
     color: #00ffae;
+  }
+}
+
+/* Mobile Navbar */
+@media screen and (max-width: 768px) {
+  .manual-toggle-icon {
+    display: block;
+  }
+
+  .nav-content {
+    position: relative;
   }
 }
