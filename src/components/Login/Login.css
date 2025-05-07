@@ -1,13 +1,17 @@
-/* Login.css */
-.login-container {
-  max-width: 400px;
+/* General Container */
+.crypto-signup-container {
+  max-width: 400px; /* Limit the width of the form */
   margin: 0 auto;
   padding: 20px;
+  width: 100%; /* Allow responsiveness */
+  box-sizing: border-box; /* Include padding and border in width */
 }
 
-.login-form {
+/* Form Styling */
+.crypto-signup-form {
   display: flex;
   flex-direction: column;
+  width: 100%; /* Ensure the form takes up full width of the container */
 }
 
 .form-group {
@@ -25,6 +29,8 @@ input {
   border-radius: 5px;
   font-size: 16px;
   margin-top: 5px;
+  width: 100%; /* Ensure input fields do not stretch outside the container */
+  box-sizing: border-box; /* Include padding and border in input field width */
 }
 
 button {
@@ -35,15 +41,88 @@ button {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  width: 100%; /* Button should also be full-width */
+  box-sizing: border-box;
 }
 
 /* Styling for response message */
 .response-message {
-margin-top: 10px;
-padding: 10px;
+  margin-top: 10px;
+  padding: 10px;
 }
 
 /* Styling for error message */
 .response-message.error {
-color: red;
+  color: red;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .crypto-signup-container {
+    padding: 10px;
+  }
+
+  .crypto-signup-form {
+    padding: 10px;
+  }
+
+  input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .crypto-error, .crypto-success {
+    font-size: 14px;
+    text-align: center;
+    padding: 5px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .crypto-signup-container {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .crypto-signup-form {
+    padding: 15px;
+  }
+
+  input {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  button {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .crypto-error, .crypto-success {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  p {
+    font-size: 13px;
+  }
 }

@@ -111,13 +111,13 @@ const CryptoSignup = () => {
           required
         />
 
-        <input
+        {/* <input
           type="text"
           name="referral_code"
           placeholder="Referral Code (optional)"
           value={formData.referral_code}
           onChange={handleChange}
-        />
+        /> */}
 
         <button type="submit" disabled={loading}>
           {loading ? 'Creating Account...' : 'Sign Up'}
