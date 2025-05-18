@@ -58,7 +58,7 @@ const Dashboard = () => {
     const fetchProfileAndAssets = async () => {
       try {
         const profileRes = await axios.get(
-          `http://127.0.0.1:8000/users/crypto-user/profile?user_id=${userId}`,
+          `https://info.vistareed.com/users/crypto-user/profile?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ const Dashboard = () => {
         setUserName(user.full_name);
 
         const assetRes = await axios.get(
-          `http://127.0.0.1:8000/coins/total-assets?user_id=${userId}`,
+          `https://info.vistareed.com/coins/total-assets?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ const Dashboard = () => {
     const fetchMarketData = async () => {
       try {
         const response = await axios.get(
-          'http://127.0.0.1:8000/coins/coins/all'
+          'https://info.vistareed.com/coins/coins/all'
         );
         setMarketData(response.data);
       } catch (err) {

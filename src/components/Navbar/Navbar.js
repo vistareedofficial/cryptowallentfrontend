@@ -60,7 +60,7 @@ const Navbar = () => {
         }
 
         const response = await axios.get(
-          `http://127.0.0.1:8000/coins/crypto/balance?user_id=${userId}`,
+          `https://info.vistareed.com/coins/crypto/balance?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

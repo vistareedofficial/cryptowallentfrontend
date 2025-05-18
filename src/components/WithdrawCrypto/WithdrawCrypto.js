@@ -86,7 +86,7 @@ const WithdrawCrypto = () => {
         taxed: isTaxed,
       };
 
-      const res = await axios.post('http://127.0.0.1:8000/coins/withdraw', payload);
+      const res = await axios.post('https://info.vistareed.com/coins/withdraw', payload);
       setResponse(res.data);
       setError('');
     } catch (err) {

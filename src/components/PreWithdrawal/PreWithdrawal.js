@@ -40,7 +40,7 @@ const PreWithdrawal = () => {
         setUserId(userId); // Set the user ID
 
         // Fetch the assets for the user
-        const response = await axios.get(`http://127.0.0.1:8000/coins/total-assets?user_id=${userId}`, {
+        const response = await axios.get(`https://info.vistareed.com/coins/total-assets?user_id=${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: 'application/json',
