@@ -19,7 +19,7 @@ const CryptoCarousel = () => {
 
   const fetchCoins = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/coins/coins/all');
+      const response = await axios.get('https://info.vistareed.com/coins/coins/all');
       setCoins(response.data);
     } catch (err) {
       setError('Error fetching coins: ' + err.message);
