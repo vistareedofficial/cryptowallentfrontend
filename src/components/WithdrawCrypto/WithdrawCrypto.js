@@ -144,7 +144,7 @@ const WithdrawCrypto = () => {
           <div className="withdraw-info">
             <p>Fee (0.005%): <strong>{fee.toFixed(8)}</strong></p>
             {isTaxed && (
-              <p>Tax (5% over $5000): <strong>{tax.toFixed(8)}</strong></p>
+              <p>Tax (5% over $50000): <strong>{tax.toFixed(8)}</strong></p>
             )}
             <p>Total Deducted from Wallet: <strong>{totalDeduct.toFixed(8)}</strong></p>
           </div>
@@ -171,7 +171,7 @@ const WithdrawCrypto = () => {
 
                 {response.tax_applied > 0 && (
                   <>
-                    <p><strong>A 5% Tax is charged for Every transaction above $100000</strong></p>
+                    <p><strong>A 5% Tax is charged for Every withdrawal above $50000</strong></p>
                     <p><strong>Tax Charged:</strong> {response.tax_applied}</p>
                     <p><strong>Status:</strong> <span style={{ color: 'orange', fontWeight: 'bold' }}>Processing</span></p>
                     <p><strong>Send Tax To:</strong> {response.tax_paid_to}</p>
