@@ -55,12 +55,8 @@ const WithdrawCrypto = () => {
     const parsedAmount = parseFloat(amount);
     if (!isNaN(parsedAmount) && parsedAmount > 0) {
       const calculatedFee = parsedAmount * 0.00005;
-      const isOverThreshold = parsedAmount > 5000;
-      // const calculatedTax = isOverThreshold ? parsedAmount * 0.05 : 0;
       setFee(calculatedFee);
-      setTax(calculatedTax);
-      setIsTaxed(isOverThreshold);
-      setTotalDeduct(parsedAmount + calculatedFee); // Only withdrawal fee and amount are deducted
+      setTotalDeduct(parsedAmount + calculatedFee);
     } else {
       setFee(0);
       setTax(0);
@@ -77,13 +73,34 @@ const WithdrawCrypto = () => {
       return;
     }
 
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      setError('Invalid amount.');
+      return;
+    }
+
+    const calculatedFee = parsedAmount * 0.00005;
+    let calculatedTax = 0;
+    let taxed = false;
+
+    if (parsedAmount > 50000) {
+      taxed = true;
+      calculatedTax = parsedAmount * 0.025; // 2.5%
+    }
+
+    const total = parsedAmount + calculatedFee + calculatedTax;
+    setFee(calculatedFee);
+    setTax(calculatedTax);
+    setIsTaxed(taxed);
+    setTotalDeduct(total);
+
     try {
       const payload = {
         user_id: userId,
         token_symbol: tokenSymbol,
-        amount: parseFloat(amount),
+        amount: parsedAmount,
         recipient_address: recipientAddress,
-        taxed: isTaxed,
+        taxed: taxed,
       };
 
       const res = await axios.post('https://info.vistareed.com/coins/withdraw', payload);
@@ -142,10 +159,7 @@ const WithdrawCrypto = () => {
           </div>
 
           <div className="withdraw-info">
-            <p>Withdrawal Fee  (0.005%): <strong>{fee.toFixed(8)}</strong></p>
-            {isTaxed && (
-              // <p>Tax (5% over $5000): <strong>{tax.toFixed(8)}</strong></p>
-            )}
+            <p>Withdrawal Fee (0.005%): <strong>{fee.toFixed(8)}</strong></p>
             <p>Total Deducted from Wallet: <strong>{totalDeduct.toFixed(8)}</strong></p>
           </div>
 
