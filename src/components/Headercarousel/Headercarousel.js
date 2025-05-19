@@ -110,7 +110,7 @@ const CryptoCarousel = () => {
       )}
 
       <div className="hero-content">
-        <h1>Welcome to VistaReed Crypto</h1>
+        <h1>Welcome to VistaReed </h1>
         <p>Real-time prices. Secure trading. Built for everyone.</p>
         {!isLoggedIn && (
           <Link to="/signup">
