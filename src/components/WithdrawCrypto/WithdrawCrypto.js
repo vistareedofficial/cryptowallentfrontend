@@ -56,7 +56,7 @@ const WithdrawCrypto = () => {
     if (!isNaN(parsedAmount) && parsedAmount > 0) {
       const calculatedFee = parsedAmount * 0.00005;
       const isOverThreshold = parsedAmount > 5000;
-      const calculatedTax = isOverThreshold ? parsedAmount * 0.05 : 0;
+      // const calculatedTax = isOverThreshold ? parsedAmount * 0.05 : 0;
       setFee(calculatedFee);
       setTax(calculatedTax);
       setIsTaxed(isOverThreshold);
