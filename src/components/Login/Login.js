@@ -37,13 +37,19 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Set tokens using AuthService
         AuthService.setTokens(data.access_token, data.refresh_token);
-        console.log('Tokens Set:', data.access_token, data.refresh_token); // Debug line
+        console.log('Tokens Set:', data.access_token, data.refresh_token);
         setSuccessMessage(data.message || 'Login successful!');
         setTimeout(() => navigate('/'), 1000);
       } else {
-        setError(data.message || 'Login failed. Please try again.');
+        // Display backend error message or default fallback
+        if (data?.detail) {
+          setError(data.detail);
+        } else if (data?.message) {
+          setError(data.message);
+        } else {
+          setError('Login failed. Please try again.');
+        }
       }
     } catch (err) {
       console.error('Login error:', err);

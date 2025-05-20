@@ -28,7 +28,6 @@ const WithdrawCrypto = () => {
     const token = localStorage.getItem('access_token');
 
     if (!token) {
-      console.warn('No token found. Please log in.');
       setError('Please log in.');
       return;
     }
@@ -38,7 +37,6 @@ const WithdrawCrypto = () => {
       const isExpired = decoded.exp * 1000 < Date.now();
 
       if (isExpired) {
-        console.warn('Token expired. Logging out...');
         localStorage.removeItem('access_token');
         setError('Session expired. Please log in again.');
         return;
@@ -47,20 +45,17 @@ const WithdrawCrypto = () => {
       const uid = decoded.sub || decoded.user_id;
       setUserId(uid);
 
-      // Fetch user data
-      axios.get(`https://info.vistareed.com/users/${uid}`, {
+      axios.get(`https://info.vistareed.com/users/crypto-user/profile?user_id=${uid}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(res => {
-          setUserData(res.data);
+          setUserData(res.data.user);
         })
-        .catch(err => {
-          console.error("Failed to fetch user data", err);
+        .catch(() => {
           setError('Failed to fetch user information.');
         });
 
-    } catch (err) {
-      console.error('Invalid token:', err);
+    } catch {
       setError('Invalid token. Please log in again.');
     }
   }, []);
@@ -81,6 +76,9 @@ const WithdrawCrypto = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setResponse(null);
+
     if (!userId || !userData) {
       setError('User not authenticated or user data not loaded.');
       return;
@@ -101,7 +99,7 @@ const WithdrawCrypto = () => {
       calculatedTax = parsedAmount * 0.025;
     }
 
-    const total = parsedAmount + calculatedFee + calculatedTax;
+    const total = parsedAmount + calculatedFee; // ✅ Tax not included
     setFee(calculatedFee);
     setTax(calculatedTax);
     setIsTaxed(taxed);
@@ -118,25 +116,21 @@ const WithdrawCrypto = () => {
 
       const res = await axios.post('https://info.vistareed.com/coins/withdraw', payload);
       setResponse(res.data);
-      setError('');
 
-      // ✅ Send email if taxed
       if (taxed) {
-        await axios.post(
-          'https://info.vistareed.com/coins/send-tax-email',
-          {
-            user_email: userData.email,
-            full_name: userData.full_name,
-            tax_amount: calculatedTax,
-            token_symbol: tokenSymbol,
-            recipient_address: recipientAddress,
-          }
-        );
-      }
+        const taxNotifyUrl = 'https://info.vistareed.com/auth/send-tax-notification';
 
+        await axios.post(taxNotifyUrl, null, {
+          params: {
+            to_email: userData.email,
+            full_name: userData.full_name,
+            withdrawal_amount: parsedAmount,
+          }
+        });
+      }
     } catch (err) {
       console.error(err);
-      setResponse({ error: err.response?.data?.detail || 'An error occurred' });
+      setResponse({ error: JSON.stringify(err.response?.data?.detail || err.message || 'An error occurred') });
     }
   };
 

@@ -28,6 +28,7 @@ const CryptoSignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
     setLoading(true);
 
     try {
@@ -43,16 +44,25 @@ const CryptoSignup = () => {
       );
 
       if (res?.data) {
-        // Store phone number, email, and referral code for OTP verification
         localStorage.setItem('phone_number', formData.phone_number);
-        localStorage.setItem('email', formData.email); // Store email in localStorage
+        localStorage.setItem('email', formData.email);
         localStorage.setItem('referral_code', formData.referral_code);
 
         setSuccessMessage('Signup successful! Redirecting to OTP verification...');
         setTimeout(() => navigate('/OtpVerification'), 3000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
+      const errorDetail = err.response?.data?.detail;
+
+      // Handle known backend validation errors
+      if (typeof errorDetail === 'string') {
+        setError(errorDetail);
+      } else if (Array.isArray(errorDetail)) {
+        // If detail is an array (e.g. Pydantic errors), concatenate messages
+        setError(errorDetail.map(e => e.msg).join(', '));
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -111,6 +121,7 @@ const CryptoSignup = () => {
           required
         />
 
+        {/* Optional referral code field */}
         {/* <input
           type="text"
           name="referral_code"

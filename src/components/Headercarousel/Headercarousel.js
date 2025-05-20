@@ -8,6 +8,8 @@ import usdcLogo from '../Images/usdcicon.png';
 import tronLogo from '../Images/Tronicon.png';
 import btcLogo from '../Images/bitcoinicon.png';
 import ethLogo from '../Images/ethhhh.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { jwtDecode } from 'jwt-decode';
 import AuthService from '../AuthService/AuthService';
 
@@ -16,6 +18,7 @@ const CryptoCarousel = () => {
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [balance, setBalance] = useState(null);
+  const [showBalance, setShowBalance] = useState(true);
 
   const fetchCoins = async () => {
     try {
@@ -88,23 +91,34 @@ const CryptoCarousel = () => {
 
   return (
     <div className="crypto-hero">
-      {/* Mobile Balance Display */}
+      {/* Mobile Balance Display with Hide/Show Button */}
       {isLoggedIn && balance && !error && (
         <div className="mobile-balance">
-          <p className="balance-title">Account Balance</p>
-          <p className="balance-usdt">USD: {balance.total_balance_usdt.toLocaleString()}</p>
-          <p className="balance-btc">= {balance.total_balance_btc.toFixed(6)} BTC</p>
+          <button
+            className="hide-balance-btn"
+            onClick={() => setShowBalance(!showBalance)}
+            aria-label={showBalance ? 'Hide balance' : 'Show balance'}
+          >
+            <FontAwesomeIcon icon={showBalance ? faEyeSlash : faEye} />
+          </button>
+          {showBalance && (
+            <>
+              <p className="balance-title">Account Balance</p>
+              <p className="balance-usdt">USD: {balance.total_balance_usdt.toLocaleString()}</p>
+              <p className="balance-btc">= {balance.total_balance_btc.toFixed(6)} BTC</p>
+            </>
+          )}
         </div>
       )}
 
       {/* Mobile Deposit & Withdraw Buttons */}
       {isLoggedIn && (
         <div className="mobile-actions">
-          <Link to='/DepositCrypto'>
-          <Button variant="primary" size="sm" className="action-btn">Deposit</Button>
+          <Link to="/DepositCrypto">
+            <Button variant="primary" size="sm" className="action-btn">Deposit</Button>
           </Link>
           <Link to="/PreWithdrawal">
-          <Button variant="danger" size="sm" className="action-btn">Withdraw</Button>
+            <Button variant="danger" size="sm" className="action-btn">Withdraw</Button>
           </Link>
         </div>
       )}

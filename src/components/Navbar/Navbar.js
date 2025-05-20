@@ -9,7 +9,9 @@ import {
   faExchangeAlt,
   faUserCircle,
   faSignOutAlt,
-  faCoins 
+  faCoins,
+  faEye,
+  faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 import logo from '../Images/vistareedddddddddd.JPG';
@@ -22,6 +24,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [balance, setBalance] = useState(null);
   const [error, setError] = useState('');
+  const [showBalance, setShowBalance] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,17 +103,23 @@ const Navbar = () => {
 
           {isLoggedIn && balance && !error && (
             <div className="balance-wrapper">
-              <p className="balance-usdt">Account Balance</p>
-              <p className="balance-usdt">USD: {balance.total_balance_usdt.toLocaleString()}</p>
-              <p className="balance-btc">= {balance.total_balance_btc.toFixed(6)} BTC</p>
+              <button className="hide-balance-btn" onClick={() => setShowBalance(!showBalance)}>
+                <FontAwesomeIcon icon={showBalance ? faEyeSlash : faEye} /> {showBalance ? 'Hide ' : 'Show Balance'}
+              </button>
+              {showBalance && (
+                <>
+                  <p className="balance-usdt">Account Balance</p>
+                  <p className="balance-usdt">
+                    USD: {balance.total_balance_usdt.toLocaleString()}
+                  </p>
+                  <p className="balance-btc">= {balance.total_balance_btc.toFixed(6)} BTC</p>
+                </>
+              )}
             </div>
           )}
 
-          {error && isLoggedIn && (
-            <div className="balance-error">{error}</div>
-          )}
+          {error && isLoggedIn && <div className="balance-error">{error}</div>}
 
-          {/* Desktop Navbar Links */}
           <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
             <Link to="/" onClick={() => setIsMenuOpen(false)}>
               <FontAwesomeIcon icon={faHome} className="nav-icon" /> Home
@@ -152,14 +161,12 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Manual toggle icon without button */}
           <div className="manual-toggle-icon" onClick={toggleMenu}>
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
           </div>
         </div>
       </nav>
 
-      {/* Bottom Mobile Navbar */}
       <div className="bottom-nav">
         <Link to="/" className="bottom-nav-item">
           <FontAwesomeIcon icon={faHome} />

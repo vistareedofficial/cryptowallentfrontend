@@ -11,6 +11,7 @@
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 20px;
+  padding-top: 40px;
 }
 
 .hero-content p {
@@ -102,10 +103,12 @@
     top: -15px;
     left: 20px;
     text-align: left;
-    background: #222;
-    padding: 8px 10px;
+    background: #090909;
+    padding: 20px 10px 6px 10px;  /* reduced vertical padding */
     border-radius: 8px;
     z-index: 20;
+    line-height: 1.2;    /* reduced line height to make it shorter */
+
   }
 
   .mobile-balance .balance-title {
@@ -141,5 +144,21 @@
     padding: 4px 12px;
     font-size: 0.75rem;
     border-radius: 8px;
+  }
+
+  .hide-balance-button {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    z-index: 20;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-balance-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
   }
 }
