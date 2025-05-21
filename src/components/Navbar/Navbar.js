@@ -89,8 +89,10 @@ const Navbar = () => {
 
   const handleLogout = () => {
     AuthService.clearTokens();
+    setBalance(null);
     setIsLoggedIn(false);
     navigate('/');
+    window.location.reload(); // Force reload to reset all components
   };
 
   return (

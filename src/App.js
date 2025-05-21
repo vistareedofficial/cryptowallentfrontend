@@ -20,6 +20,9 @@ import OtpVerification from './components/OtpVerification/OtpVerification';
 import WithdrawCrypto from './components/WithdrawCrypto/WithdrawCrypto'
 import PreWithdrawal from './components/PreWithdrawal/PreWithdrawal'
 import DepositCrypto from './components/DepositCrypto/DepositCrypto'
+import PasswordResetRequest from './components/PasswordResetReques/PasswordResetRequest'
+import PasswordResetVerify from './components/PasswordResetVerify/PasswordResetVerify'
+import PasswordReset from './components/PasswordReset/PasswordReset'
 // import DepositCrypto from './components/DepositCrypto'
 
 function App() {
@@ -33,6 +36,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/RegularSubscription" element={<RegularSubscription />} />
+        <Route path="/PasswordResetVerify" element={<PasswordResetVerify />} />
+        <Route path="/PasswordReset" element={<PasswordReset />} />
         <Route path="/PremiumSubscription" element={<PremiumSubscription />} />
         <Route path="/VIPSubscription" element={<VIPSubscription />} />
         <Route path="/PreWithdrawal" element={<PreWithdrawal />} />
@@ -42,6 +47,7 @@ function App() {
         <Route path="/WithdrawCrypto" element={<WithdrawCrypto />} />
         <Route path="/BitcoinPaymentPage" element={<BitcoinPaymentPage />} />
         <Route path="/GiftCardPaymentPage" element={<GiftCardPaymentPage />} />
+        <Route path="/PasswordResetRequest" element={<PasswordResetRequest />} />
         <Route path="/OtpVerification" element={<OtpVerification />} />
         <Route path="/Contact" element={<Contact />} />
 

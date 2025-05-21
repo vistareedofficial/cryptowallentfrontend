@@ -42,7 +42,6 @@ const Login = () => {
         setSuccessMessage(data.message || 'Login successful!');
         setTimeout(() => navigate('/'), 1000);
       } else {
-        // Display backend error message or default fallback
         if (data?.detail) {
           setError(data.detail);
         } else if (data?.message) {
@@ -84,6 +83,13 @@ const Login = () => {
           onChange={handleChange}
           required
         />
+
+        {/* Forgot Password link */}
+        <p style={{ textAlign: 'right', marginTop: '10px' }}>
+          <Link to="/PasswordResetRequest" style={{ color: '#3498db', fontSize: '14px' }}>
+            Forgot Password?
+          </Link>
+        </p>
 
         <button type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
