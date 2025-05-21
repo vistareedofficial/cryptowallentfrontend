@@ -7,7 +7,7 @@ body, .crypto-navbar {
 .crypto-navbar {
   background: #121212;
   color: #ffffff;
-  position: sticky;
+  position: relative; /* ensure navbar is the positioning context */
   top: 0;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
@@ -88,8 +88,9 @@ body, .crypto-navbar {
   font-size: 16px;
   line-height: 1.4;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
   border-radius: 8px;
+  padding-right: 100px;
 }
 
 .balance-usdt,
@@ -214,7 +215,9 @@ body, .crypto-navbar {
 
 @media screen and (max-width: 1280px) {
   .balance-wrapper {
-    top: 80px; /* Adjust as needed to avoid overlapping */
-    left: 20px;
+    position: relative; /* prevent absolute overlap */
+    top: auto;
+    left: auto;
+    margin-right: 50rem; /* or adjust spacing as needed */
   }
 }
