@@ -124,3 +124,10 @@
   text-align: center;
   white-space: pre-line;
 }
+.withdraw-label-warning {
+  color: red;
+  font-size: 0.70rem; /* smaller font size */
+  margin-top: 4px;
+  display: block;
+  font-weight: 600;
+}
