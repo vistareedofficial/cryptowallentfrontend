@@ -37,19 +37,33 @@
   gap: 10px;
 }
 
-.dashboard-button {
-  padding: 8px 16px;
-  background-color: #28a745;
+.deposit-button,
+.dashboard-withdraw-button {
+  flex: 1 1 48%;
+  padding: 12px;
   border: none;
   border-radius: 6px;
   color: white;
   font-weight: bold;
   cursor: pointer;
   font-size: 14px;
+  text-align: center;
 }
 
-.dashboard-button.withdraw {
-  background-color: #dc3545;
+.deposit-button {
+  background-color: #28a745;
+}
+
+.dashboard-withdraw-button {
+  background-color: #ca182a;
+}
+
+.deposit-button:hover {
+  background-color: #218838;
+}
+
+.withdraw-button:hover {
+  background-color: #c61526;
 }
 
 .profile-card {
@@ -118,12 +132,13 @@ ul li:last-child {
 
   .button-group {
     flex-direction: column;
-    width: 100%;
-    gap: 8px;
+    gap: 10px;
   }
 
-  .dashboard-button {
+  .deposit-button,
+  .withdraw-button {
     width: 100%;
+    flex: none;
   }
 }
 

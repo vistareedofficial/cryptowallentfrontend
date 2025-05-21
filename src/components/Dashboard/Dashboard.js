@@ -12,12 +12,11 @@ const Dashboard = () => {
   const [assets, setAssets] = useState([]);
   const [error, setError] = useState(null);
   const [marketData, setMarketData] = useState([]);
-  const navigate = useNavigate(); // Initialize the navigate function for redirect
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
 
-    // Check if the token exists
     if (!token) {
       setError(
         <span>
@@ -30,7 +29,6 @@ const Dashboard = () => {
     const decoded = jwtDecode(token);
     const isExpired = decoded.exp * 1000 < Date.now();
 
-    // Handle expired token
     if (isExpired) {
       console.warn('Token expired. Logging out...');
       AuthService.clearTokens();
@@ -40,7 +38,7 @@ const Dashboard = () => {
           <Link to="/Login">Login here</Link>
         </span>
       );
-      navigate('/Login'); // Redirect to login if the token is expired
+      navigate('/Login');
       return;
     }
 
@@ -51,7 +49,7 @@ const Dashboard = () => {
           Invalid token. Please log in again. <Link to="/Login">Login here</Link>
         </span>
       );
-      navigate('/Login'); // Redirect to login if the userId is invalid
+      navigate('/Login');
       return;
     }
 
@@ -107,11 +105,10 @@ const Dashboard = () => {
 
     fetchProfileAndAssets();
     fetchMarketData();
-  }, [navigate]); // Ensure navigate is in the dependency array
+  }, [navigate]);
 
   return (
     <div className="dashboard-container">
-      {/* Show error message if session is invalid */}
       {error ? (
         <p className="error-message">{error}</p>
       ) : (
@@ -124,17 +121,15 @@ const Dashboard = () => {
                 <h3>{balance.toFixed(2)} USD</h3>
               </div>
             </div>
-
-            <div className="button-group">
-              <Link to='/DepositCrypto'>
-                <button className="dashboard-button small">Deposit</button>
-              </Link>
-              <Link to="/PreWithdrawal">
-                <button className="dashboard-button small withdraw">Withdraw</button>
-              </Link>
-            </div>
           </div>
-
+          <div className="button-group">
+            <Link to='/DepositCrypto'>
+              <button className="deposit-button">Deposit</button>
+            </Link>
+            <Link to="/PreWithdrawal">
+              <button className="dashboard-withdraw-button">Withdraw</button>
+            </Link>
+          </div>
           <div className="profile-card">
             <FaUserCircle size={60} className="profile-icon" />
             <h3>{userName}</h3>

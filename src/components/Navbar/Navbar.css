@@ -210,3 +210,11 @@ body, .crypto-navbar {
     position: relative;
   }
 }
+
+
+@media screen and (max-width: 1280px) {
+  .balance-wrapper {
+    top: 80px; /* Adjust as needed to avoid overlapping */
+    left: 20px;
+  }
+}
