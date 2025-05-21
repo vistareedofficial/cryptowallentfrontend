@@ -59,7 +59,7 @@ const PasswordResetVerify = () => {
     <div className="otp-container">
       <form className="otp-form" onSubmit={handleSubmit}>
         <h2>🔐 Verify OTP</h2>
-        <p className="otp-message">Enter the OTP code sent to your email</p>
+        <p className="otp-message">Enter the OTP code sent to your email, Check junk if not in inbox.</p>
 
         {error && <div className="otp-error">{error}</div>}
 

@@ -98,7 +98,7 @@ const OtpVerification = () => {
       <form className="otp-form" onSubmit={handleSubmit}>
         <h2>🔐 OTP Verification</h2>
         {email && (
-          <p className="otp-message">An OTP has been sent to your email <strong>{email}</strong></p>
+          <p className="otp-message">OTP sent to your email. Check junk if not in inbox.<strong>{email}</strong></p>
         )}
 
         {error && <div className="otp-error">{error}</div>}
