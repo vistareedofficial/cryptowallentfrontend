@@ -212,17 +212,10 @@ body, .crypto-navbar {
 }
 
 
-@media screen and (max-width: 1280px) {
+@media screen and (min-width: 1280px) {
   .balance-wrapper {
-    top: 80px; 
-   
+    top: 80px;
   }
 }
 
 
-@media screen and (max-width: 1400px) {
-  .balance-wrapper {
-    top: 80px; 
-   
-  }
-}
