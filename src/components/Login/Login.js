@@ -34,30 +34,23 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-      const isJson = response.headers.get('content-type')?.includes('application/json');
-      const data = isJson ? await response.json() : {};
+      const data = await response.json();
 
-      console.log('Login response:', data);
-
-      if (!response.ok) {
-        const detail = data?.detail;
-        const message = data?.message;
-
-        if (detail && typeof detail === 'string') {
-          setError(detail);
-        } else if (message && typeof message === 'string') {
-          setError(message);
+      if (response.ok) {
+        AuthService.setTokens(data.access_token, data.refresh_token);
+        console.log('Tokens Set:', data.access_token, data.refresh_token);
+        setSuccessMessage(data.message || 'Login successful!');
+        setTimeout(() => navigate('/'), 1000);
+      } else {
+        // Display backend error message or default fallback
+        if (data?.detail) {
+          setError(data.detail);
+        } else if (data?.message) {
+          setError(data.message);
         } else {
           setError('Login failed. Please try again.');
         }
-
-        return;
       }
-
-      AuthService.setTokens(data.access_token, data.refresh_token);
-      console.log('Tokens Set:', data.access_token, data.refresh_token);
-      setSuccessMessage(data.message || 'Login successful!');
-      setTimeout(() => navigate('/'), 1000);
     } catch (err) {
       console.error('Login error:', err);
       setError('Something went wrong. Please try again later.');
@@ -91,12 +84,6 @@ const Login = () => {
           onChange={handleChange}
           required
         />
-
-        <p style={{ textAlign: 'right', marginTop: '10px' }}>
-          <Link to="/PasswordResetRequest" style={{ color: '#3498db', fontSize: '14px' }}>
-            Forgot Password?
-          </Link>
-        </p>
 
         <button type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
