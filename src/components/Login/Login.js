@@ -35,27 +35,28 @@ const Login = () => {
       });
 
       const data = await response.json();
+      console.log('Login response:', data);
 
-      if (response.ok) {
-        AuthService.setTokens(data.access_token, data.refresh_token);
-        console.log('Tokens Set:', data.access_token, data.refresh_token);
-        setSuccessMessage(data.message || 'Login successful!');
-        setTimeout(() => navigate('/'), 1000);
-      } else {
+      if (!response.ok) {
         const detail = data?.detail;
         const message = data?.message;
 
         if (detail) {
-          setError(detail); // <-- Your specific message will show up here
+          setError(detail); // Will display 'Account not Activated. Contact Admin to activate your account.'
         } else if (message) {
           setError(message);
-        } else if (typeof data === 'string') {
-          setError(data);
         } else {
-          console.error('Unexpected error format:', data);
-          setError('Login failed. Please try again later.');
+          setError(typeof data === 'string' ? data : 'Login failed. Please try again.');
         }
+
+        setLoading(false);
+        return;
       }
+
+      AuthService.setTokens(data.access_token, data.refresh_token);
+      console.log('Tokens Set:', data.access_token, data.refresh_token);
+      setSuccessMessage(data.message || 'Login successful!');
+      setTimeout(() => navigate('/'), 1000);
     } catch (err) {
       console.error('Login error:', err);
       setError('Something went wrong. Please try again later.');
@@ -90,7 +91,6 @@ const Login = () => {
           required
         />
 
-        {/* Forgot Password link */}
         <p style={{ textAlign: 'right', marginTop: '10px' }}>
           <Link to="/PasswordResetRequest" style={{ color: '#3498db', fontSize: '14px' }}>
             Forgot Password?
