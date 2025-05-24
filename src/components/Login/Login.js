@@ -42,12 +42,18 @@ const Login = () => {
         setSuccessMessage(data.message || 'Login successful!');
         setTimeout(() => navigate('/'), 1000);
       } else {
-        if (data?.detail) {
-          setError(data.detail);
-        } else if (data?.message) {
-          setError(data.message);
+        const detail = data?.detail;
+        const message = data?.message;
+
+        if (detail) {
+          setError(detail); // <-- Your specific message will show up here
+        } else if (message) {
+          setError(message);
+        } else if (typeof data === 'string') {
+          setError(data);
         } else {
-          setError('Login failed. Please try again.');
+          console.error('Unexpected error format:', data);
+          setError('Login failed. Please try again later.');
         }
       }
     } catch (err) {
