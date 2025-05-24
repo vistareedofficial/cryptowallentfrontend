@@ -34,22 +34,23 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson ? await response.json() : {};
+
       console.log('Login response:', data);
 
       if (!response.ok) {
         const detail = data?.detail;
         const message = data?.message;
 
-        if (detail) {
-          setError(detail); // Will display 'Account not Activated. Contact Admin to activate your account.'
-        } else if (message) {
+        if (detail && typeof detail === 'string') {
+          setError(detail);
+        } else if (message && typeof message === 'string') {
           setError(message);
         } else {
-          setError(typeof data === 'string' ? data : 'Login failed. Please try again.');
+          setError('Login failed. Please try again.');
         }
 
-        setLoading(false);
         return;
       }
 
