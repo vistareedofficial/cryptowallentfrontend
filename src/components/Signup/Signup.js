@@ -54,11 +54,9 @@ const CryptoSignup = () => {
     } catch (err) {
       const errorDetail = err.response?.data?.detail;
 
-      // Handle known backend validation errors
       if (typeof errorDetail === 'string') {
         setError(errorDetail);
       } else if (Array.isArray(errorDetail)) {
-        // If detail is an array (e.g. Pydantic errors), concatenate messages
         setError(errorDetail.map(e => e.msg).join(', '));
       } else {
         setError('Something went wrong. Please try again.');
@@ -133,6 +131,10 @@ const CryptoSignup = () => {
         <button type="submit" disabled={loading}>
           {loading ? 'Creating Account...' : 'Sign Up'}
         </button>
+
+        <p className="privacy-agreement">
+          By signing up on our platform, you agree to our <Link to="/PrivacyPolicy">Privacy Policy</Link>.
+        </p>
 
         <p>Already have an account? <Link to="/Login">Login</Link></p>
       </form>

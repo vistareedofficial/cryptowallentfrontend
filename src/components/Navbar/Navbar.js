@@ -12,6 +12,8 @@ import {
   faCoins,
   faEye,
   faEyeSlash,
+  faShieldAlt, // ← Add this
+
 } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 import logo from '../Images/vistareedddddddddd.JPG';
@@ -134,6 +136,9 @@ const Navbar = () => {
             </Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
               <FontAwesomeIcon icon={faUserCircle} className="nav-icon" /> Contact
+            </Link>
+            <Link to="/PrivacyPolicy" onClick={() => setIsMenuOpen(false)}>
+              <FontAwesomeIcon icon={faShieldAlt} className="nav-icon" /> Privacy Policy
             </Link>
 
             {isLoggedIn ? (
