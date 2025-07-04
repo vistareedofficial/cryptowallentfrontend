@@ -59,7 +59,7 @@ const PrivacyPolicy = () => {
             <p>By using our platform, you acknowledge and accept this geographic policy restriction.</p>
 
             <h5>7. Your Rights</h5>
-            <p>You may have rights to access, update, or delete your data. Contact us at privacy@vistareed.com to exercise your rights.</p>
+            <p>You may have rights to access, update, or delete your data. Contact us at vistareed@outlook.com to exercise your rights.</p>
 
             <h5>8. Changes to This Policy</h5>
             <p>We may update this policy and notify users accordingly. Continued use indicates acceptance of the changes.</p>
