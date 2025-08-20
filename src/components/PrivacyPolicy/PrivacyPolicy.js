@@ -69,7 +69,6 @@ const PrivacyPolicy = () => {
             <ul>
               <li>Email: <a href="mailto:vistareed@outlook.com">vistareed@outlook.com</a></li>
               <li>Website: www.vistareed.com</li>
-              <li>Address: 12 Park Lane, Lagos, Nigeria</li>
             </ul>
           </div>
         </Card.Body>
