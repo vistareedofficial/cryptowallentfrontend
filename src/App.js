@@ -24,6 +24,7 @@ import PasswordResetRequest from './components/PasswordResetReques/PasswordReset
 import PasswordResetVerify from './components/PasswordResetVerify/PasswordResetVerify'
 import PasswordReset from './components/PasswordReset/PasswordReset'
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy'
+import Investment from './components/Investment/Investment'
 // import DepositCrypto from './components/DepositCrypto'
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/Investment" element={<Investment />} />
         <Route path="/RegularSubscription" element={<RegularSubscription />} />
         <Route path="/PasswordResetVerify" element={<PasswordResetVerify />} />
         <Route path="/PasswordReset" element={<PasswordReset />} />

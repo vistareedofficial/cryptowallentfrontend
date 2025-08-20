@@ -12,8 +12,8 @@ import {
   faCoins,
   faEye,
   faEyeSlash,
-  faShieldAlt, // ← Add this
-
+  faShieldAlt,
+  faPiggyBank, // ← Added for Investment
 } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 import logo from '../Images/vistareedddddddddd.JPG';
@@ -108,7 +108,8 @@ const Navbar = () => {
           {isLoggedIn && balance && !error && (
             <div className="balance-wrapper">
               <button className="hide-balance-btn" onClick={() => setShowBalance(!showBalance)}>
-                <FontAwesomeIcon icon={showBalance ? faEyeSlash : faEye} /> {showBalance ? 'Hide ' : 'Show Balance'}
+                <FontAwesomeIcon icon={showBalance ? faEyeSlash : faEye} />{' '}
+                {showBalance ? 'Hide ' : 'Show Balance'}
               </button>
               {showBalance && (
                 <>
@@ -139,6 +140,9 @@ const Navbar = () => {
             </Link>
             <Link to="/PrivacyPolicy" onClick={() => setIsMenuOpen(false)}>
               <FontAwesomeIcon icon={faShieldAlt} className="nav-icon" /> Privacy Policy
+            </Link>
+            <Link to="/Investment" onClick={() => setIsMenuOpen(false)}>
+              <FontAwesomeIcon icon={faPiggyBank} className="nav-icon" /> Investment
             </Link>
 
             {isLoggedIn ? (
@@ -182,6 +186,10 @@ const Navbar = () => {
         <Link to="/" className="bottom-nav-item center">
           <FontAwesomeIcon icon={faChartLine} />
           <span>Market</span>
+        </Link>
+        <Link to="/investment" className="bottom-nav-item center">
+          <FontAwesomeIcon icon={faPiggyBank} />
+          <span>Investment</span>
         </Link>
         <Link to="/" className="bottom-nav-item center">
           <FontAwesomeIcon icon={faExchangeAlt} />

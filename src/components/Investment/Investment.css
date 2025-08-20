@@ -1,0 +1,57 @@
+.investment-container {
+    margin-bottom: 100px;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  
+  .investment-card {
+    padding: 30px;
+    background-color: #2d2d44;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .investment-header {
+    background-color: #1e1e2f;
+    color: #00d084; /* green highlight */
+    font-size: 1.5rem;
+    padding: 15px;
+    border-bottom: none;
+  }
+  
+  .investment-content h5 {
+    margin-top: 25px;
+    color: #00d084;
+    font-weight: bold;
+  }
+  
+  .investment-content ul {
+    padding-left: 20px;
+    margin-top: 10px;
+  }
+  
+  .investment-content li {
+    margin-bottom: 8px;
+  }
+  
+  .investment-content a {
+    color: #00d084;
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 576px) {
+    .investment-card {
+      padding: 20px;
+    }
+  
+    .investment-header {
+      font-size: 1.2rem;
+      padding: 10px;
+    }
+  
+    .investment-content {
+      font-size: 0.95rem;
+    }
+  }
+  
