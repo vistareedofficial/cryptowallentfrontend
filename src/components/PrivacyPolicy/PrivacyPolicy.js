@@ -42,8 +42,8 @@ const PrivacyPolicy = () => {
             <h5>5. Sharing and Disclosure</h5>
             <p>We do not sell your data. We may share it with legal authorities or trusted service providers when required.</p>
 
-            <h5>6. Geographic Restrictions (EU & Other Jurisdictions)</h5>
-            <p><strong>Important:</strong> As of <strong>March 1, 2025</strong>, we will no longer accept user registrations from the <strong>European Union (EU)</strong> or the following restricted jurisdictions:</p>
+            <h5>6. Geographic Restrictions </h5>
+            <p><strong>Important:</strong> As of <strong>March 1, 2025</strong>, we will no longer accept user registrations from the following restricted jurisdictions:</p>
             <ul>
               <li>Iran</li>
               <li>North Korea</li>
