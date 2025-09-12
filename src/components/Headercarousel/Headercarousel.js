@@ -120,9 +120,9 @@ const CryptoCarousel = () => {
           <Link to="/PreWithdrawal">
             <Button variant="danger" size="sm" className="action-btn">Withdraw</Button>
           </Link>
-          <Link to="/InvestCrypto">
+          {/* <Link to="/InvestCrypto">
             <Button variant="danger" size="sm" className="action-btn">Invest</Button>
-          </Link>
+          </Link> */}
         </div>
       )}
 
