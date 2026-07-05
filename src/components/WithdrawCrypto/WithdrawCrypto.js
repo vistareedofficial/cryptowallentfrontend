@@ -348,7 +348,7 @@ const WithdrawCrypto = () => {
 
           <div>
             <label className="withdraw-label">Recipient Address</label>
-            <label className="withdraw-label-warning">Address must be on the Tron Network</label>
+            {/* <label className="withdraw-label-warning">Address must be on the Tron Network</label> */}
             <input
               type="text"
               className="withdraw-input"
