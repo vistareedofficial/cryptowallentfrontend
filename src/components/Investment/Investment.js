@@ -37,7 +37,7 @@ const Investment = () => {
 
             <h5>Contact Support</h5>
             <ul>
-              <li>Email: <a href="mailto:vistareed@outlook.com">vistareed@outlook.com</a></li>
+              <li>Email: <a href="mailto:vistareedofficial@proton.me">vistareedofficial@proton.me</a></li>
               <li>Website: www.vistareed.com</li>
             </ul>
           </div>
