@@ -34,7 +34,7 @@ const PasswordResetVerify = () => {
       formData.append('otp_code', otpCode);
 
       const response = await axios.post(
-        'http://127.0.0.1:8000/auth/password-reset/verify-otp',
+        'https://cryptoexchanebackend-cvrq.onrender.com/auth/password-reset/verify-otp',
         formData,
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       );

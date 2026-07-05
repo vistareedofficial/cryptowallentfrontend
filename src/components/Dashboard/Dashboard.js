@@ -56,7 +56,7 @@ const Dashboard = () => {
     const fetchProfileAndAssets = async () => {
       try {
         const profileRes = await axios.get(
-          `http://127.0.0.1:8000/users/crypto-user/profile?user_id=${userId}`,
+          `https://cryptoexchanebackend-cvrq.onrender.com/users/crypto-user/profile?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const Dashboard = () => {
         setUserName(user.full_name);
 
         const assetRes = await axios.get(
-          `http://127.0.0.1:8000/coins/total-assets?user_id=${userId}`,
+          `https://cryptoexchanebackend-cvrq.onrender.com/coins/total-assets?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -88,7 +88,7 @@ const Dashboard = () => {
     const fetchBalance = async () => {
       try {
         const balanceRes = await axios.get(
-          `http://127.0.0.1:8000/coins/crypto/balance?user_id=${userId}`,
+          `https://cryptoexchanebackend-cvrq.onrender.com/coins/crypto/balance?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -106,7 +106,7 @@ const Dashboard = () => {
     const fetchMarketData = async () => {
       try {
         const response = await axios.get(
-          'http://127.0.0.1:8000/coins/coins/all'
+          'https://cryptoexchanebackend-cvrq.onrender.com/coins/coins/all'
         );
         setMarketData(response.data);
       } catch (err) {

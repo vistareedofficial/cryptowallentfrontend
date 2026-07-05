@@ -51,7 +51,7 @@ const WithdrawCrypto = () => {
       const uid = decoded.sub || decoded.user_id;
       setUserId(uid);
 
-      axios.get(`http://127.0.0.1:8000/users/crypto-user/profile?user_id=${uid}`, {
+      axios.get(`https://cryptoexchanebackend-cvrq.onrender.com/users/crypto-user/profile?user_id=${uid}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(res => {
@@ -74,7 +74,7 @@ const WithdrawCrypto = () => {
         return;
       }
 
-      const res = await axios.get(`http://127.0.0.1:8000/coins/total-assets`, {
+      const res = await axios.get(`https://cryptoexchanebackend-cvrq.onrender.com/coins/total-assets`, {
         params: { user_id: uid },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -204,7 +204,7 @@ const WithdrawCrypto = () => {
         taxed: taxed,
       };
 
-      const res = await axios.post('http://127.0.0.1:8000/coins/withdraw', payload, {
+      const res = await axios.post('https://cryptoexchanebackend-cvrq.onrender.com/coins/withdraw', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ const WithdrawCrypto = () => {
       });
 
       if (taxed) {
-        await axios.post('http://127.0.0.1:8000/auth/send-tax-notification', null, {
+        await axios.post('https://cryptoexchanebackend-cvrq.onrender.com/auth/send-tax-notification', null, {
           params: {
             to_email: userData.email,
             full_name: userData.full_name,

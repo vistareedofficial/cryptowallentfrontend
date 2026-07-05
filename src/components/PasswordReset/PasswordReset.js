@@ -46,7 +46,7 @@ const PasswordReset = () => {
       formData.append('new_password', newPassword);
 
       const response = await axios.post(
-        'http://127.0.0.1:8000/users/users/password-reset/reset',
+        'https://cryptoexchanebackend-cvrq.onrender.com/users/users/password-reset/reset',
         formData,
         {
           headers: {

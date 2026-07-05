@@ -22,7 +22,7 @@ const CryptoCarousel = () => {
 
   const fetchCoins = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/coins/coins/all');
+      const response = await axios.get('https://cryptoexchanebackend-cvrq.onrender.com/coins/coins/all');
       setCoins(response.data);
     } catch (err) {
       setError('Error fetching coins: ' + err.message);
@@ -56,7 +56,7 @@ const CryptoCarousel = () => {
       }
 
       const response = await axios.get(
-        `http://127.0.0.1:8000/coins/crypto/balance?user_id=${userId}`,
+        `https://cryptoexchanebackend-cvrq.onrender.com/coins/crypto/balance?user_id=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

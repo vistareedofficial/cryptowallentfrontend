@@ -33,7 +33,7 @@ const CryptoSignup = () => {
 
     try {
       const res = await axios.post(
-        'http://127.0.0.1:8000/users/pre-register/crypto-user/new/',
+        'https://cryptoexchanebackend-cvrq.onrender.com/users/pre-register/crypto-user/new/',
         formData,
         {
           headers: {
