@@ -14,45 +14,8 @@ const OtpVerification = () => {
   const phoneNumber = localStorage.getItem('phone_number');
   const email = localStorage.getItem('email');  // Retrieve email from localStorage
 
-  useEffect(() => {
-    if (inputsRef.current[0]) {
-      inputsRef.current[0].focus();
-    }
-  }, []);
-
-  const handleChange = (index, value) => {
-    if (!isNaN(value)) {
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
-
-      if (value && index < 5) {
-        inputsRef.current[index + 1]?.focus();
-      }
-    }
-  };
-
-  const handleKeyDown = (index, event) => {
-    if (event.key === 'Backspace' && !otp[index] && index > 0) {
-      inputsRef.current[index - 1]?.focus();
-    }
-  };
-
-  const handlePaste = (event) => {
-    event.preventDefault();
-    const paste = event.clipboardData.getData('text').slice(0, 6).split('');
-    if (paste.every((ch) => !isNaN(ch))) {
-      const newOtp = [...otp];
-      paste.forEach((char, i) => {
-        if (i < 6) newOtp[i] = char;
-      });
-      setOtp(newOtp);
-      inputsRef.current[paste.length - 1]?.focus();
-    }
-  };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     setError('');
     setSuccess('');
     const enteredOtp = otp.join('');
@@ -84,12 +47,69 @@ const OtpVerification = () => {
       setSuccess('Verification successful! Redirecting...');
       localStorage.removeItem('phone_number');
       localStorage.removeItem('referral_code');
+      localStorage.removeItem('dev_otp_code');
 
       setTimeout(() => navigate('/Login'), 2000);
     } catch (err) {
       setError(err.response?.data?.detail || 'Verification failed. Try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Dev/testing convenience: if the signup step stashed the OTP the
+    // backend returned directly (instead of requiring a real email check),
+    // auto-fill each box and submit automatically. Remove this once the
+    // backend stops returning otp_code in its signup response.
+    const devOtp = localStorage.getItem('dev_otp_code');
+
+    if (devOtp && devOtp.length === 6 && /^\d{6}$/.test(devOtp)) {
+      const digits = devOtp.split('');
+      setOtp(digits);
+
+      // Give React a tick to render the filled boxes before auto-submitting.
+      const timer = setTimeout(() => {
+        handleSubmit();
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }
+
+    if (inputsRef.current[0]) {
+      inputsRef.current[0].focus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleChange = (index, value) => {
+    if (!isNaN(value)) {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+
+      if (value && index < 5) {
+        inputsRef.current[index + 1]?.focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (index, event) => {
+    if (event.key === 'Backspace' && !otp[index] && index > 0) {
+      inputsRef.current[index - 1]?.focus();
+    }
+  };
+
+  const handlePaste = (event) => {
+    event.preventDefault();
+    const paste = event.clipboardData.getData('text').slice(0, 6).split('');
+    if (paste.every((ch) => !isNaN(ch))) {
+      const newOtp = [...otp];
+      paste.forEach((char, i) => {
+        if (i < 6) newOtp[i] = char;
+      });
+      setOtp(newOtp);
+      inputsRef.current[paste.length - 1]?.focus();
     }
   };
 

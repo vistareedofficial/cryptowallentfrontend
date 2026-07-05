@@ -9,7 +9,7 @@ const Contact = () => {
         <Card.Header style={{ backgroundColor: '#1e1e2f', color: '#f0c040' }}>Contact Us</Card.Header>
         <Card.Body>
           <ul style={{ listStyle: 'none', paddingLeft: 0, fontSize: '18px' }}>
-            <li style={{ padding: '6px 0', borderBottom: '1px solid #444' }}>vistareed@outlook.com</li>
+            <li style={{ padding: '6px 0', borderBottom: '1px solid #444' }}>vistareedofficial@proton.me</li>
           </ul>
         </Card.Body>
       </Card>

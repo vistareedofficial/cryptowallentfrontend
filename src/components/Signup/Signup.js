@@ -48,6 +48,15 @@ const CryptoSignup = () => {
         localStorage.setItem('email', formData.email);
         localStorage.setItem('referral_code', formData.referral_code);
 
+        // Dev/testing convenience: backend currently returns the OTP directly
+        // in the signup response, so we can auto-fill it on the next screen
+        // instead of requiring the user to check their email. Remove this
+        // once the backend stops returning otp_code in production.
+        const devOtp = res.data?.data?.otp_code;
+        if (devOtp) {
+          localStorage.setItem('dev_otp_code', devOtp);
+        }
+
         setSuccessMessage('Signup successful! Redirecting to OTP verification...');
         setTimeout(() => navigate('/OtpVerification'), 3000);
       }
