@@ -7,7 +7,7 @@ import AuthService from '../AuthService/AuthService';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [balance, setBalance] = useState(0.0);
+  const [balance, setBalance] = useState(null);
   const [userName, setUserName] = useState('');
   const [assets, setAssets] = useState([]);
   const [error, setError] = useState(null);
@@ -56,7 +56,7 @@ const Dashboard = () => {
     const fetchProfileAndAssets = async () => {
       try {
         const profileRes = await axios.get(
-          `https://info.vistareed.com/users/crypto-user/profile?user_id=${userId}`,
+          `http://127.0.0.1:8000/users/crypto-user/profile?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const Dashboard = () => {
         setUserName(user.full_name);
 
         const assetRes = await axios.get(
-          `https://info.vistareed.com/coins/total-assets?user_id=${userId}`,
+          `http://127.0.0.1:8000/coins/total-assets?user_id=${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -78,24 +78,35 @@ const Dashboard = () => {
           }
         );
 
-        const assetData = assetRes.data;
-        setAssets(assetData);
-
-        const totalUSD = assetData.reduce(
-          (acc, item) => acc + parseFloat(item.balance),
-          0
-        );
-        setBalance(totalUSD);
+        setAssets(assetRes.data);
       } catch (err) {
         console.error(err);
         setError('Failed to fetch data.');
       }
     };
 
+    const fetchBalance = async () => {
+      try {
+        const balanceRes = await axios.get(
+          `http://127.0.0.1:8000/coins/crypto/balance?user_id=${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: 'application/json',
+            },
+          }
+        );
+
+        setBalance(balanceRes.data);
+      } catch (err) {
+        console.error('Error fetching balance:', err);
+      }
+    };
+
     const fetchMarketData = async () => {
       try {
         const response = await axios.get(
-          'https://info.vistareed.com/coins/coins/all'
+          'http://127.0.0.1:8000/coins/coins/all'
         );
         setMarketData(response.data);
       } catch (err) {
@@ -104,6 +115,7 @@ const Dashboard = () => {
     };
 
     fetchProfileAndAssets();
+    fetchBalance();
     fetchMarketData();
   }, [navigate]);
 
@@ -117,8 +129,17 @@ const Dashboard = () => {
             <div className="wallet-balance desktop-hidden">
               <FaWallet className="wallet-icon" />
               <div>
-                <p className="label">Wallet Balance</p>
-                <h3>{balance.toFixed(2)} USD</h3>
+                <p className="label">Account Balance</p>
+                {balance ? (
+                  <>
+                    <h3>USD: {balance.total_balance_usdt.toLocaleString()}</h3>
+                    <p className="balance-btc">
+                      = {balance.total_balance_btc.toFixed(6)} BTC
+                    </p>
+                  </>
+                ) : (
+                  <h3>Loading...</h3>
+                )}
               </div>
             </div>
           </div>

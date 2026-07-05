@@ -37,7 +37,7 @@ const DepositCrypto = () => {
 
         setUserId(userId);
 
-        const response = await axios.get(`https://info.vistareed.com/coins/total-assets?user_id=${userId}`, {
+        const response = await axios.get(`http://127.0.0.1:8000/coins/total-assets?user_id=${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: 'application/json',

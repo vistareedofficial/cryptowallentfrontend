@@ -25,7 +25,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://info.vistareed.com/auth/login/crypto-user/', {
+      const response = await fetch('http://127.0.0.1:8000/auth/login/crypto-user/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

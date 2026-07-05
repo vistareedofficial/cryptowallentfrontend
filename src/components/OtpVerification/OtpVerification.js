@@ -72,7 +72,7 @@ const OtpVerification = () => {
       if (referral_code) formData.append('referral_code', referral_code);
 
       await axios.post(
-        'https://info.vistareed.com/users/crypto-user-complete-registration/',
+        'http://127.0.0.1:8000/users/crypto-user-complete-registration/',
         formData,
         {
           headers: {

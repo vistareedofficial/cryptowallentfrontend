@@ -27,7 +27,7 @@ const PasswordResetRequest = () => {
       formData.append('email', email);
 
       const response = await axios.post(
-        'https://info.vistareed.com/users/password-reset/request',
+        'http://127.0.0.1:8000/users/password-reset/request',
         formData,
         {
           headers: {

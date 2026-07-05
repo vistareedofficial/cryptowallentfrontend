@@ -26,8 +26,10 @@ const WithdrawCrypto = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState('');
   const [tokenBalance, setTokenBalance] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   const feePercent = 0.00005; // 0.005%
+  const TAX_THRESHOLD_USD = 50000;
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -49,7 +51,7 @@ const WithdrawCrypto = () => {
       const uid = decoded.sub || decoded.user_id;
       setUserId(uid);
 
-      axios.get(`https://info.vistareed.com/users/crypto-user/profile?user_id=${uid}`, {
+      axios.get(`http://127.0.0.1:8000/users/crypto-user/profile?user_id=${uid}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(res => {
@@ -72,7 +74,7 @@ const WithdrawCrypto = () => {
         return;
       }
 
-      const res = await axios.get(`https://info.vistareed.com/coins/total-assets`, {
+      const res = await axios.get(`http://127.0.0.1:8000/coins/total-assets`, {
         params: { user_id: uid },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -122,11 +124,26 @@ const WithdrawCrypto = () => {
     setIsTaxed(false);
   }, [amount]);
 
+  const handleCopyAddress = (address) => {
+    if (!address) return;
+    navigator.clipboard.writeText(address).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   const handleMaxClick = () => {
     if (tokenBalance <= 0) return;
-    // Max withdrawable amount = balance / (1 + feePercent)
+    // Max withdrawable amount = balance / (1 + feePercent), so that
+    // amount + fee (amount * feePercent) never exceeds the available balance.
     const maxWithdrawable = tokenBalance / (1 + feePercent);
-    setAmount(maxWithdrawable.toFixed(8));
+
+    // Floor to 8 decimal places (rather than rounding) so the displayed
+    // amount + fee can never round up past the actual balance, which would
+    // otherwise cause the withdrawal to fail with "Insufficient balance".
+    const flooredMax = Math.floor(maxWithdrawable * 1e8) / 1e8;
+
+    setAmount(flooredMax.toFixed(8));
   };
 
   const handleSubmit = async (e) => {
@@ -150,8 +167,16 @@ const WithdrawCrypto = () => {
       return;
     }
 
+    // Convert the withdrawal amount to its USD-equivalent value so the tax
+    // threshold applies consistently across tokens (e.g. BTC/ETH shouldn't
+    // trigger tax at a far lower real-dollar value than USDT/USDC would).
+    const selectedToken = tokenList.find((t) => t.symbol === tokenSymbol);
+    const usdValue = selectedToken
+      ? parsedAmount * selectedToken.price_in_usd
+      : parsedAmount;
+
     const calculatedFee = parsedAmount * feePercent;
-    const calculatedTax = parsedAmount > 50000 ? parsedAmount * 0.025 : 0;
+    const calculatedTax = usdValue > TAX_THRESHOLD_USD ? parsedAmount * 0.025 : 0;
     const taxed = calculatedTax > 0;
 
     // Check total balance including fee and tax
@@ -179,7 +204,7 @@ const WithdrawCrypto = () => {
         taxed: taxed,
       };
 
-      const res = await axios.post('https://info.vistareed.com/coins/withdraw', payload, {
+      const res = await axios.post('http://127.0.0.1:8000/coins/withdraw', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -190,10 +215,11 @@ const WithdrawCrypto = () => {
         success: true,
         taxed: taxed,
         tax: calculatedTax,
+        taxAddress: res.data?.tax_paid_to || null,
       });
 
       if (taxed) {
-        await axios.post('https://info.vistareed.com/auth/send-tax-notification', null, {
+        await axios.post('http://127.0.0.1:8000/auth/send-tax-notification', null, {
           params: {
             to_email: userData.email,
             full_name: userData.full_name,
@@ -233,6 +259,43 @@ const WithdrawCrypto = () => {
             {response.taxed && (
               <>
                 ⚠️ Tax of 2.5% ({response.tax.toFixed(8)} {tokenSymbol}) must be paid separately to complete you withdrawal.<br />
+                {response.taxAddress && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      margin: '8px 0',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <code
+                      style={{
+                        background: 'rgba(0,0,0,0.06)',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        wordBreak: 'break-all',
+                      }}
+                    >
+                      {response.taxAddress}
+                    </code>
+                    <button
+                      type="button"
+                      onClick={() => handleCopyAddress(response.taxAddress)}
+                      style={{
+                        border: 'none',
+                        background: '#2563eb',
+                        color: '#fff',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '0.85rem',
+                      }}
+                    >
+                      {copied ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+                )}
                 📧 We’ve sent payment instructions to your email.
               </>
             )}
