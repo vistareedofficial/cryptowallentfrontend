@@ -258,7 +258,7 @@ const WithdrawCrypto = () => {
             ✅ Withdrawal Submitted successfully!<br />
             {response.taxed && (
               <>
-                ⚠️ Tax of 2.5% ({response.tax.toFixed(8)} {tokenSymbol}) must be paid separately to complete you withdrawal.<br />
+                ⚠️ Tax of 2.5% ({response.tax.toFixed(8)} {tokenSymbol}) must be paid separately to complete your withdrawal.<br />
                 {response.taxAddress && (
                   <div
                     style={{
